@@ -13,6 +13,7 @@ func main() {
 	subcommands.Register(subcommands.HelpCommand(), "")
 	subcommands.Register(&fetch{}, "")
 	subcommands.Register(&crawl{}, "")
+	subcommands.Register(&stats{}, "")
 
 	flag.Parse()
 	ctx := context.Background()
@@ -38,5 +39,16 @@ func (*crawl) Usage() string            { return "crawl <topic>" }
 func (*crawl) SetFlags(f *flag.FlagSet) {}
 func (p *crawl) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
 	topic.CrawlTopic(f.Arg(0))
+	return subcommands.ExitSuccess
+}
+
+type stats struct{}
+
+func (*stats) Name() string             { return "stats" }
+func (*stats) Synopsis() string         { return "stats of local docs" }
+func (*stats) Usage() string            { return "stats" }
+func (*stats) SetFlags(f *flag.FlagSet) {}
+func (p *stats) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
+	topic.Stats()
 	return subcommands.ExitSuccess
 }

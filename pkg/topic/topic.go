@@ -52,6 +52,20 @@ func fatal(err error) {
 	}
 }
 
+func Stats() {
+	stats := make(map[string]int)
+	m, err := filepath.Glob("./documentation/**/**.objc.json")
+	fatal(err)
+	for _, match := range m {
+		b, err := ioutil.ReadFile(match)
+		fatal(err)
+		var t Topic
+		fatal(json.Unmarshal(b, &t))
+		stats[t.Type]++
+	}
+	fmt.Println(stats)
+}
+
 func CrawlTopic(topic string) {
 	if topic == "" {
 		m, err := filepath.Glob("./documentation/**/**.objc.json")
