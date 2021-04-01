@@ -15,6 +15,8 @@ const (
 
 	LEFTPAREN
 	RIGHTPAREN
+	LEFTANGLE
+	RIGHTANGLE
 	ASTERISK
 	PLUS
 	MINUS
@@ -22,9 +24,17 @@ const (
 	COLON
 	COMMA
 	EQUAL
+	CARET
 
 	INTERFACE
 	PROPERTY
+	PROTOCOL
+
+	CONST
+	TYPEDEF
+	ENUM
+
+	KINDOF
 )
 
 var eof = rune(0)
@@ -68,8 +78,8 @@ func (s *scanner) Scan() (tok token, lit string) {
 		return s.scanWhitespace()
 	}
 
-	// If we see a letter then consume as an ident.
-	if isLetter(ch) {
+	// If we see a letter or underscore then consume as an ident.
+	if isLetter(ch) || ch == '_' {
 		s.unread()
 		return s.scanIdent()
 	}
@@ -83,6 +93,8 @@ func (s *scanner) Scan() (tok token, lit string) {
 			return PROPERTY, lit
 		case "@interface":
 			return INTERFACE, lit
+		case "@protocol":
+			return PROTOCOL, lit
 		default:
 			return ILLEGAL, lit
 		}
@@ -100,6 +112,10 @@ func (s *scanner) Scan() (tok token, lit string) {
 		return LEFTPAREN, string(ch)
 	case ')':
 		return RIGHTPAREN, string(ch)
+	case '<':
+		return LEFTANGLE, string(ch)
+	case '>':
+		return RIGHTANGLE, string(ch)
 	case ':':
 		return COLON, string(ch)
 	case ';':
@@ -110,6 +126,8 @@ func (s *scanner) Scan() (tok token, lit string) {
 		return MINUS, string(ch)
 	case '=':
 		return EQUAL, string(ch)
+	case '^':
+		return CARET, string(ch)
 	}
 
 	return ILLEGAL, string(ch)
@@ -154,6 +172,14 @@ func (s *scanner) scanIdent() (tok token, lit string) {
 		} else {
 			_, _ = buf.WriteRune(ch)
 		}
+	}
+
+	// known keyword tokens
+	if buf.String() == "const" {
+		return CONST, buf.String()
+	}
+	if buf.String() == "__kindof" {
+		return KINDOF, buf.String()
 	}
 
 	// Otherwise return as a regular identifier.
