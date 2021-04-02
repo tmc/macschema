@@ -12,6 +12,7 @@ type Statement struct {
 	Method    *MethodDecl
 	Property  *PropertyDecl
 	Interface *InterfaceDecl
+	Protocol  *ProtocolDecl
 }
 
 func (s Statement) String() string {
@@ -26,6 +27,20 @@ func (s Statement) String() string {
 		return s.Interface.String()
 	}
 	return ""
+}
+
+type ProtocolDecl struct {
+	Name      string
+	SuperName string
+}
+
+func (i ProtocolDecl) String() string {
+	b := &strings.Builder{}
+	_, _ = fmt.Fprintf(b, "@protocol %s", i.Name)
+	if i.SuperName != "" {
+		_, _ = fmt.Fprintf(b, " : %s", i.SuperName)
+	}
+	return b.String()
 }
 
 type InterfaceDecl struct {
@@ -43,10 +58,8 @@ func (i InterfaceDecl) String() string {
 }
 
 type PropertyDecl struct {
-	Name     string
-	Type     TypeInfo
-	IsConst  bool
-	IsKindOf bool
+	Name string
+	Type TypeInfo
 
 	// Attributes
 	Class     bool
@@ -56,6 +69,7 @@ type PropertyDecl struct {
 	Copy      bool
 	Nullable  bool
 	Nonnull   bool
+	Retain    bool
 	Getter    string
 	Setter    string
 }
@@ -84,6 +98,9 @@ func (p PropertyDecl) String() string {
 	}
 	if p.Weak {
 		options = append(options, "weak")
+	}
+	if p.Retain {
+		options = append(options, "retain")
 	}
 	if len(options) != 0 {
 		b.WriteString("(")
@@ -173,10 +190,12 @@ func (m MethodDecl) String() string {
 }
 
 type TypeInfo struct {
-	Name   string
-	IsPtr  bool
-	Block  *FunctionDecl
-	Params []TypeInfo
+	Name     string
+	IsPtr    bool
+	IsConst  bool
+	IsKindOf bool
+	Block    *FunctionDecl
+	Params   []TypeInfo
 }
 
 func (t TypeInfo) String() string {
@@ -249,234 +268,6 @@ func (p *Parser) scan() (tok token, lit string) {
 
 func (p *Parser) unscan() { p.buf.n = 1 }
 
-// scanType will scan a typeInfo
-func (p *Parser) scanType(parens bool) (*TypeInfo, error) {
-	ti := &TypeInfo{}
-
-	if parens {
-		if tok, lit := p.scan(); tok != LEFTPAREN {
-			return nil, fmt.Errorf("found %q, expected (", lit)
-		}
-	}
-
-	tok, lit := p.scan()
-	if tok != IDENT {
-		return nil, fmt.Errorf("found %q, expected identifier", lit)
-	}
-	ti.Name = lit
-
-	tok, lit = p.scan()
-	if tok == LEFTANGLE {
-		for {
-			typ, err := p.scanType(false)
-			if err != nil {
-				return nil, err
-			}
-			ti.Params = append(ti.Params, *typ)
-
-			if tok, _ := p.scan(); tok != COMMA {
-				p.unscan()
-				break
-			}
-		}
-
-		if tok, lit := p.scan(); tok != RIGHTANGLE {
-			return nil, fmt.Errorf("found %q, expected > for type param", lit)
-		}
-	} else {
-		p.unscan()
-	}
-
-	tok, lit = p.scan()
-	if tok == ASTERISK {
-		ti.IsPtr = true
-	} else if tok == LEFTPAREN {
-		tok, lit = p.scan()
-		if tok == CARET {
-			ti.Block = &FunctionDecl{IsBlock: true}
-			ti.Block.ReturnType.Name = ti.Name
-			ti.Name = ""
-		} else {
-			return nil, fmt.Errorf("found %q, expected ^ for block", lit)
-		}
-
-		tok, lit = p.scan()
-		if tok == IDENT {
-			ti.Block.Name = lit
-		} else {
-			p.unscan()
-		}
-
-		if tok, lit := p.scan(); tok != RIGHTPAREN {
-			return nil, fmt.Errorf("found %q, expected )", lit)
-		}
-
-		if tok, lit := p.scan(); tok != LEFTPAREN {
-			return nil, fmt.Errorf("found %q, expected ( for block args", lit)
-		}
-
-		for {
-			arg := ArgInfo{}
-
-			typ, err := p.scanType(false)
-			if err != nil {
-				return nil, err
-			}
-			arg.Type = *typ
-
-			tok, lit = p.scan()
-			if tok != IDENT {
-				return nil, fmt.Errorf("found %q, expected arg identifier", lit)
-			}
-			arg.Name = lit
-
-			ti.Block.Args = append(ti.Block.Args, arg)
-
-			if tok, _ := p.scan(); tok != COMMA {
-				p.unscan()
-				break
-			}
-		}
-
-		if tok, lit := p.scan(); tok != RIGHTPAREN {
-			return nil, fmt.Errorf("found %q, expected ) for block args", lit)
-		}
-
-	} else {
-		p.unscan()
-	}
-
-	if parens {
-		if tok, lit := p.scan(); tok != RIGHTPAREN {
-			return nil, fmt.Errorf("found %q, expected )", lit)
-		}
-	}
-
-	return ti, nil
-}
-
-func (p *Parser) Parse() (*Statement, error) {
-	tok, lit := p.scan()
-	switch tok {
-	// TODO: typedef, var? ... const? [can be function apparently]
-	case PLUS, MINUS:
-		p.unscan()
-		decl, err := p.parseMethod()
-		return &Statement{Method: decl}, err
-	case PROPERTY:
-		decl, err := p.parseProperty()
-		return &Statement{Property: decl}, err
-	case INTERFACE:
-		decl, err := p.parseInterface()
-		return &Statement{Interface: decl}, err
-	default:
-		// TODO: parseFunction
-		return nil, fmt.Errorf("found %q, expected method (+,-) or keyword (@...)", lit)
-	}
-}
-
-func (p *Parser) parseProperty() (*PropertyDecl, error) {
-	decl := &PropertyDecl{}
-
-	tok, lit := p.scan()
-	if tok == LEFTPAREN {
-		for {
-			tok, lit = p.scan()
-			if tok != IDENT {
-				return nil, fmt.Errorf("found %q, expected property attribute", lit)
-			}
-
-			switch lit {
-			case "readwrite":
-				// readwrite is opposite of readonly,
-				// this is the default, so no-op
-			case "readonly":
-				decl.Readonly = true
-			case "class":
-				decl.Class = true
-			case "strong":
-				// strong is opposite of weak,
-				// this is the default, so no-op
-			case "weak":
-				decl.Weak = true
-			case "copy":
-				decl.Copy = true
-			case "assign":
-				// another default, no-ops
-			case "nonatomic":
-				decl.Nonatomic = true
-			case "nullable":
-				decl.Nullable = true
-			case "nonnull":
-				decl.Nonnull = true
-			case "setter":
-				tok, lit = p.scan()
-				if tok != EQUAL {
-					return nil, fmt.Errorf("found %q, expected =", lit)
-				}
-
-				tok, lit = p.scan()
-				if tok != IDENT {
-					return nil, fmt.Errorf("found %q, expected setter identifier", lit)
-				}
-				decl.Setter = lit
-			case "getter":
-				tok, lit = p.scan()
-				if tok != EQUAL {
-					return nil, fmt.Errorf("found %q, expected =", lit)
-				}
-
-				tok, lit = p.scan()
-				if tok != IDENT {
-					return nil, fmt.Errorf("found %q, expected getter identifier", lit)
-				}
-				decl.Getter = lit
-			default:
-				return nil, fmt.Errorf("found %q, unrecognized property attribute", lit)
-			}
-
-			tok, lit = p.scan()
-			if tok == RIGHTPAREN {
-				break
-			}
-			if tok != COMMA {
-				return nil, fmt.Errorf("found %q, expected , or )", lit)
-			}
-		}
-	} else {
-		p.unscan()
-	}
-
-	tok, lit = p.scan()
-	switch tok {
-	case CONST:
-		decl.IsConst = true
-	case KINDOF:
-		decl.IsKindOf = true
-	default:
-		p.unscan()
-	}
-
-	typ, err := p.scanType(false)
-	if err != nil {
-		return nil, err
-	}
-	decl.Type = *typ
-
-	tok, lit = p.scan()
-	if tok != IDENT {
-		return nil, fmt.Errorf("found %q, expected name identifier", lit)
-	}
-	decl.Name = lit
-
-	tok, lit = p.scan()
-	if tok != SEMICOLON {
-		return nil, fmt.Errorf("found %q, expected ;", lit)
-	}
-
-	return decl, nil
-}
-
 func (p *Parser) parseInterface() (*InterfaceDecl, error) {
 	decl := &InterfaceDecl{}
 
@@ -500,67 +291,48 @@ func (p *Parser) parseInterface() (*InterfaceDecl, error) {
 	return decl, nil
 }
 
-func (p *Parser) parseMethod() (*MethodDecl, error) {
-	decl := &MethodDecl{}
+func (p *Parser) parseProtocol() (*ProtocolDecl, error) {
+	decl := &ProtocolDecl{}
 
 	tok, lit := p.scan()
-	switch tok {
-	case PLUS:
-		decl.TypeMethod = true
-	case MINUS:
-		decl.TypeMethod = false
-	default:
-		return nil, fmt.Errorf("found %q, expected + or -", lit)
-	}
-
-	typ, err := p.scanType(true)
-	if err != nil {
-		return nil, err
-	}
-	decl.ReturnType = *typ
-
-	tok, lit = p.scan()
 	if tok != IDENT {
 		return nil, fmt.Errorf("found %q, expected identifier", lit)
 	}
-	decl.NameParts = append(decl.NameParts, lit)
+	decl.Name = lit
 
 	tok, lit = p.scan()
-	if tok == SEMICOLON {
-		return decl, nil
-	} else if tok == COLON {
-		for {
-			arg := ArgInfo{}
-
-			typ, err := p.scanType(true)
-			if err != nil {
-				return nil, err
-			}
-			arg.Type = *typ
-
-			tok, lit = p.scan()
-			if tok != IDENT {
-				return nil, fmt.Errorf("found %q, expected identifier", lit)
-			}
-			arg.Name = lit
-
-			decl.Args = append(decl.Args, arg)
-
-			tok, lit = p.scan()
-			if tok == SEMICOLON {
-				return decl, nil
-			} else if tok == IDENT {
-				decl.NameParts = append(decl.NameParts, lit)
-
-				tok, lit = p.scan()
-				if tok != COLON {
-					return nil, fmt.Errorf("found %q, expected :", lit)
-				}
-			} else {
-				return nil, fmt.Errorf("found %q, expected ; or more arguments", lit)
-			}
+	if tok == COLON {
+		tok, lit = p.scan()
+		if tok != IDENT {
+			return nil, fmt.Errorf("found %q, expected identifier", lit)
 		}
+		decl.SuperName = lit
 	} else {
-		return nil, fmt.Errorf("found %q, expected : or ;", lit)
+		p.unscan()
+	}
+
+	return decl, nil
+}
+
+func (p *Parser) Parse() (*Statement, error) {
+	tok, lit := p.scan()
+	switch tok {
+	// TODO: typedef, var? ... const? [can be function apparently]
+	case PLUS, MINUS:
+		p.unscan()
+		decl, err := p.parseMethod()
+		return &Statement{Method: decl}, err
+	case PROPERTY:
+		decl, err := p.parseProperty()
+		return &Statement{Property: decl}, err
+	case INTERFACE:
+		decl, err := p.parseInterface()
+		return &Statement{Interface: decl}, err
+	case PROTOCOL:
+		decl, err := p.parseProtocol()
+		return &Statement{Protocol: decl}, err
+	default:
+		// TODO: parseFunction
+		return nil, fmt.Errorf("found %q, expected method (+,-) or keyword (@...)", lit)
 	}
 }

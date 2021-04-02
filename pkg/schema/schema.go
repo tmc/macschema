@@ -1,38 +1,62 @@
-package main
+package schema
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
-	"os"
+	"net/url"
 	"strings"
 	"time"
 
-	"github.com/chromedp/cdproto/cdp"
-	"github.com/chromedp/chromedp"
+	"github.com/progrium/macschema/pkg/declparser"
+	"github.com/progrium/macschema/pkg/topic"
 )
 
 type Class struct {
 	Name        string
 	Description string
+	Declaration string
 
-	InstanceMethods    []Method
-	InstanceProperties []Property
+	InstanceMethods    []Method   `json:",omitempty"`
+	InstanceProperties []Property `json:",omitempty"`
 
-	TypeMethods    []Method
-	TypeProperties []Property
+	TypeMethods    []Method   `json:",omitempty"`
+	TypeProperties []Property `json:",omitempty"`
 
 	Frameworks []string
 	Platforms  []string
 
-	Declaration string
-	URL         string
+	Deprecated bool `json:",omitempty"`
+	URL        string
+
+	ParseDate    time.Time
+	ParseVersion int
 }
 
 type TypeInfo struct {
-	Name  string
-	IsPtr bool
+	Name     string
+	IsPtr    bool       `json:",omitempty"`
+	IsConst  bool       `json:",omitempty"`
+	IsKindOf bool       `json:",omitempty"`
+	Block    *Block     `json:",omitempty"`
+	Params   []TypeInfo `json:",omitempty"`
+}
+
+func TypeInfoFromAst(ti declparser.TypeInfo) TypeInfo {
+	return TypeInfo{
+		Name:     ti.Name,
+		IsPtr:    ti.IsPtr,
+		IsConst:  ti.IsConst,
+		IsKindOf: ti.IsKindOf,
+		// TODO: more
+	}
+}
+
+type Block struct {
+	Name       string
+	ReturnType TypeInfo
+	Args       []ArgInfo
 }
 
 type ArgInfo struct {
@@ -40,133 +64,169 @@ type ArgInfo struct {
 	Type TypeInfo
 }
 
-type Property struct {
-	Name  string
-	Type  TypeInfo
-	Attrs struct {
-		Readonly  bool
-		Weak      bool
-		Nonatomic bool
-		Copy      bool
-		Getter    string
-		Setter    string
+func ArgInfoFromAst(ai declparser.ArgInfo) ArgInfo {
+	return ArgInfo{
+		Name: ai.Name,
+		Type: TypeInfoFromAst(ai.Type),
 	}
+}
+
+type Property struct {
+	Name        string
+	Description string
 	Declaration string
-	URL         string
+	Type        TypeInfo
+	Attrs       struct {
+		Class     bool   `json:",omitempty"`
+		Readonly  bool   `json:",omitempty"`
+		Weak      bool   `json:",omitempty"`
+		Nonatomic bool   `json:",omitempty"`
+		Copy      bool   `json:",omitempty"`
+		Nullable  bool   `json:",omitempty"`
+		Nonnull   bool   `json:",omitempty"`
+		Retain    bool   `json:",omitempty"`
+		Getter    string `json:",omitempty"`
+		Setter    string `json:",omitempty"`
+	}
+	Deprecated bool `json:",omitempty"`
+	URL        string
+}
+
+func PropertyFromAst(p declparser.PropertyDecl) Property {
+	prop := Property{
+		Name: p.Name,
+		Type: TypeInfoFromAst(p.Type),
+	}
+	prop.Attrs.Class = p.Class
+	prop.Attrs.Copy = p.Copy
+	prop.Attrs.Getter = p.Getter
+	prop.Attrs.Nonatomic = p.Nonatomic
+	prop.Attrs.Nonnull = p.Nonnull
+	prop.Attrs.Nullable = p.Nullable
+	prop.Attrs.Readonly = p.Readonly
+	prop.Attrs.Setter = p.Setter
+	prop.Attrs.Weak = p.Weak
+	prop.Attrs.Retain = p.Retain
+	return prop
 }
 
 type Method struct {
 	Name        string
+	Description string
+	Declaration string
 	Return      TypeInfo
 	Args        []ArgInfo
-	Declaration string
+	Deprecated  bool `json:",omitempty"`
 	URL         string
 }
 
-func main() {
-	ctx, cancel := chromedp.NewContext(
-		context.Background(),
-		//chromedp.WithDebugf(log.Printf),
-	)
-	defer cancel()
-	ctx, cancel = context.WithTimeout(ctx, 10*time.Second)
-	defer cancel()
-
-	var class Class
-	class.URL = os.Args[1]
-
-	if err := chromedp.Run(ctx,
-		chromedp.Navigate(class.URL),
-		chromedp.WaitVisible(`main`),
-		chromedp.Text(`main div.topictitle h1.title`, &class.Name),
-		chromedp.Text(`main div.container div.description div.abstract.content`, &class.Description),
-		textList(`main div.summary div.frameworks ul li span`, &class.Frameworks),
-		textList(`main div.summary div.availability ul li span`, &class.Platforms),
-	); err != nil {
-		log.Fatal(err)
+func MethodFromAst(m declparser.MethodDecl) Method {
+	var args []ArgInfo
+	for _, arg := range m.Args {
+		args = append(args, ArgInfoFromAst(arg))
 	}
-
-	topics := "#topics div.contenttable-section div.section-content div.topic a.link"
-	if os.Getenv("ALLOW_DEPRECATED") == "" {
-		topics = topics + ":not(.deprecated)"
+	return Method{
+		Name:   m.Name(),
+		Return: TypeInfoFromAst(m.ReturnType),
+		Args:   args,
 	}
-	for _, n := range nodes(ctx, topics) {
-		var t Topic
-		var ok bool
-		if err := chromedp.Run(ctx,
-			chromedp.TextContent(n.FullXPathByID(), &t.Name),
-			chromedp.AttributeValue(n.FullXPathByID(), "href", &t.URL, &ok),
-		); err != nil {
-			log.Fatal(err)
-		}
+}
 
-		// Handle related consts/enums later
-		if strings.HasPrefix(t.Name, "NS") ||
-			strings.HasPrefix(t.Name, "CG") ||
-			strings.HasPrefix(t.Name, "UI") ||
-			strings.HasPrefix(t.Name, "WK") {
-			continue
-		}
+const BaseURL = "https://developer.apple.com"
 
-		// Manual fix for less than perfect selector
-		if strings.HasPrefix(t.Name, "API Reference") {
-			continue
-		}
+const Version = 1
 
-		if t.URL != "" {
-			t.URL = fmt.Sprintf("https://developer.apple.com%s", t.URL)
-		}
-
-		if strings.HasPrefix(t.Name, "+ ") {
-			class.TypeMethods = append(class.TypeMethods, TypeMethod{Name: t.Name[2:], URL: t.URL})
-		} else if strings.HasPrefix(t.Name, "- ") {
-			class.InstanceMethods = append(class.InstanceMethods, InstanceMethod{Name: t.Name[2:], URL: t.URL})
-		} else {
-			class.Properties = append(class.Properties, Property{Name: t.Name, URL: t.URL})
-		}
-	}
-
-	b, err := json.MarshalIndent(class, "", "  ")
+func fatal(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(string(b))
 }
 
-func nodes(ctx context.Context, sel string) []*cdp.Node {
-	var nodes []*cdp.Node
-	if err := chromedp.Run(ctx, chromedp.Nodes(sel, &nodes)); err != nil {
-		log.Fatal(err)
+func readTopicFromURL(pathOrUrl string) topic.Topic {
+	if strings.HasPrefix(pathOrUrl, "/") {
+		pathOrUrl = BaseURL + pathOrUrl
 	}
-	return nodes
-}
-
-func textList(sel string, lst *[]string) chromedp.Tasks {
-	var nodes []*cdp.Node
-	return chromedp.Tasks{
-		chromedp.Nodes(sel, &nodes),
-		chromedp.ActionFunc(func(ctx context.Context) error {
-			for _, n := range nodes {
-
-				txt := innerText(n)
-				if txt != "" {
-					*lst = append(*lst, txt)
-				}
-			}
-			return nil
-		}),
+	u, _ := url.Parse(pathOrUrl)
+	lang := u.Query().Get("language")
+	if lang == "" {
+		lang = "swift"
 	}
+	return readTopic(fmt.Sprintf(".%s.%s.json", u.Path, lang))
 }
 
-func innerText(node *cdp.Node) string {
-	var t []string
-	for _, c := range node.Children {
-		switch c.NodeType {
-		case cdp.NodeTypeText:
-			t = append(t, strings.Trim(c.NodeValue, " \n"))
-		case cdp.NodeTypeElement:
-			t = append(t, innerText(c))
+func readTopic(path string) topic.Topic {
+	b, err := ioutil.ReadFile(path)
+	fatal(err)
+
+	var t topic.Topic
+	fatal(json.Unmarshal(b, &t))
+	return t
+}
+
+func Parse(path string) {
+	t := readTopic(path)
+
+	var c Class
+	c.ParseDate = t.LastFetch
+	c.ParseVersion = Version
+	c.Declaration = t.Declaration
+	c.Name = t.Title
+	c.Description = t.Description
+	c.Frameworks = t.Frameworks
+	c.URL = BaseURL + t.Path
+	for _, p := range t.Platforms {
+		if p == "Deprecated" {
+			c.Deprecated = true
+		} else {
+			c.Platforms = append(c.Platforms, p)
 		}
 	}
-	return strings.Trim(strings.Join(t, ""), " \n")
+	for _, topic := range t.Topics {
+		t := readTopicFromURL(topic.Path)
+		if t.Type == "Function" || t.Type == "Enumeration" || t.Type == "Global Variable" {
+			continue
+		}
+		if t.Declaration != "" {
+			p := declparser.NewStringParser(t.Declaration)
+			ast, err := p.Parse()
+			if err != nil {
+				if strings.Contains(err.Error(), "typedef") ||
+					strings.Contains(err.Error(), "const") {
+					continue
+				}
+				fatal(fmt.Errorf("%s: %w", topic.Path, err))
+			}
+			switch t.Type {
+			case "Type Method":
+				m := MethodFromAst(*ast.Method)
+				m.Description = t.Description
+				m.Declaration = t.Declaration
+				m.URL = BaseURL + t.Path
+				c.TypeMethods = append(c.TypeMethods, m)
+			case "Instance Method":
+				m := MethodFromAst(*ast.Method)
+				m.Description = t.Description
+				m.Declaration = t.Declaration
+				m.URL = BaseURL + t.Path
+				c.InstanceMethods = append(c.InstanceMethods, m)
+			case "Type Property":
+				p := PropertyFromAst(*ast.Property)
+				p.Description = t.Description
+				p.Declaration = t.Declaration
+				p.URL = BaseURL + t.Path
+				c.TypeProperties = append(c.TypeProperties, p)
+			case "Instance Property":
+				p := PropertyFromAst(*ast.Property)
+				p.Description = t.Description
+				p.Declaration = t.Declaration
+				p.URL = BaseURL + t.Path
+				c.InstanceProperties = append(c.InstanceProperties, p)
+			default:
+			}
+		}
+	}
+
+	b, err := json.MarshalIndent(c, "", "  ")
+	fatal(err)
+	fmt.Println(string(b))
 }

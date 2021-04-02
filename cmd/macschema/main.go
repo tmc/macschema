@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/google/subcommands"
+	"github.com/progrium/macschema/pkg/schema"
 	"github.com/progrium/macschema/pkg/topic"
 )
 
@@ -14,10 +15,22 @@ func main() {
 	subcommands.Register(&fetch{}, "")
 	subcommands.Register(&crawl{}, "")
 	subcommands.Register(&stats{}, "")
+	subcommands.Register(&parse{}, "")
 
 	flag.Parse()
 	ctx := context.Background()
 	os.Exit(int(subcommands.Execute(ctx)))
+}
+
+type parse struct{}
+
+func (*parse) Name() string             { return "parse" }
+func (*parse) Synopsis() string         { return "parse topic as json" }
+func (*parse) Usage() string            { return "parse <topic>" }
+func (*parse) SetFlags(f *flag.FlagSet) {}
+func (p *parse) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
+	schema.Parse(f.Arg(0))
+	return subcommands.ExitSuccess
 }
 
 type fetch struct{}

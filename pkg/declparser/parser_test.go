@@ -273,10 +273,10 @@ func TestParser_Parse(t *testing.T) {
 					Name:     "eventRef",
 					Readonly: true,
 					Type: TypeInfo{
-						Name:  "void",
-						IsPtr: true,
+						Name:    "void",
+						IsPtr:   true,
+						IsConst: true,
 					},
-					IsConst: true,
 				},
 			},
 		},
@@ -298,6 +298,29 @@ func TestParser_Parse(t *testing.T) {
 				},
 			},
 		},
+
+		{
+			name:  "property(readonly) declared with NSArray pointer of __kindof NSWindow pointer",
+			input: `@property(readonly, copy) NSArray<__kindof NSWindow *> *sheets;`,
+			want: &Statement{
+				Property: &PropertyDecl{
+					Name:     "sheets",
+					Copy:     true,
+					Readonly: true,
+					Type: TypeInfo{
+						Name:  "NSArray",
+						IsPtr: true,
+						Params: []TypeInfo{
+							{
+								Name:     "NSWindow",
+								IsPtr:    true,
+								IsKindOf: true,
+							},
+						},
+					},
+				},
+			},
+		},
 		{
 			name:  "property(weak) declared as a __kindof a pointer type",
 			input: `@property(weak) __kindof NSWindowController *windowController;`,
@@ -306,10 +329,10 @@ func TestParser_Parse(t *testing.T) {
 					Name: "windowController",
 					Weak: true,
 					Type: TypeInfo{
-						Name:  "NSWindowController",
-						IsPtr: true,
+						Name:     "NSWindowController",
+						IsPtr:    true,
+						IsKindOf: true,
 					},
-					IsKindOf: true,
 				},
 			},
 		},
