@@ -186,6 +186,12 @@ func Parse(path string) {
 		if t.Type == "Function" || t.Type == "Enumeration" || t.Type == "Global Variable" {
 			continue
 		}
+		var isDeprecated bool
+		for _, p := range t.Platforms {
+			if p == "Deprecated" {
+				isDeprecated = true
+			}
+		}
 		if t.Declaration != "" {
 			p := declparser.NewStringParser(t.Declaration)
 			ast, err := p.Parse()
@@ -202,24 +208,28 @@ func Parse(path string) {
 				m.Description = t.Description
 				m.Declaration = t.Declaration
 				m.URL = BaseURL + t.Path
+				m.Deprecated = isDeprecated
 				c.TypeMethods = append(c.TypeMethods, m)
 			case "Instance Method":
 				m := MethodFromAst(*ast.Method)
 				m.Description = t.Description
 				m.Declaration = t.Declaration
 				m.URL = BaseURL + t.Path
+				m.Deprecated = isDeprecated
 				c.InstanceMethods = append(c.InstanceMethods, m)
 			case "Type Property":
 				p := PropertyFromAst(*ast.Property)
 				p.Description = t.Description
 				p.Declaration = t.Declaration
 				p.URL = BaseURL + t.Path
+				p.Deprecated = isDeprecated
 				c.TypeProperties = append(c.TypeProperties, p)
 			case "Instance Property":
 				p := PropertyFromAst(*ast.Property)
 				p.Description = t.Description
 				p.Declaration = t.Declaration
 				p.URL = BaseURL + t.Path
+				p.Deprecated = isDeprecated
 				c.InstanceProperties = append(c.InstanceProperties, p)
 			default:
 			}
