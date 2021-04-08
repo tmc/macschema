@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/url"
+	"reflect"
 	"strings"
 	"time"
 
@@ -35,32 +36,61 @@ type Class struct {
 }
 
 type TypeInfo struct {
-	Name     string
-	IsPtr    bool       `json:",omitempty"`
-	IsConst  bool       `json:",omitempty"`
-	IsKindOf bool       `json:",omitempty"`
-	Block    *Block     `json:",omitempty"`
-	Params   []TypeInfo `json:",omitempty"`
+	Name              string     `json:",omitempty"`
+	IsPtr             bool       `json:",omitempty"`
+	IsPtrPtr          bool       `json:",omitempty"`
+	IsNullable        bool       `json:",omitempty"`
+	IsNonnull         bool       `json:",omitempty"`
+	IsNullUnspecified bool       `json:",omitempty"`
+	IsConst           bool       `json:",omitempty"`
+	IsKindOf          bool       `json:",omitempty"`
+	Block             *Block     `json:",omitempty"`
+	Params            []TypeInfo `json:",omitempty"`
 }
 
 func TypeInfoFromAst(ti declparser.TypeInfo) TypeInfo {
+	var block *Block
+	if ti.Block != nil {
+		block = BlockFromAst(ti.Block)
+	}
+	var params []TypeInfo
+	for _, param := range ti.Params {
+		params = append(params, TypeInfoFromAst(param))
+	}
 	return TypeInfo{
-		Name:     ti.Name,
-		IsPtr:    ti.IsPtr,
-		IsConst:  ti.IsConst,
-		IsKindOf: ti.IsKindOf,
-		// TODO: more
+		Name:              ti.Name,
+		IsPtr:             ti.IsPtr,
+		IsPtrPtr:          ti.IsPtrPtr,
+		IsNullable:        ti.IsNullable,
+		IsNonnull:         ti.IsNonnull,
+		IsNullUnspecified: ti.IsNullUnspecified,
+		IsConst:           ti.IsConst,
+		IsKindOf:          ti.IsKindOf,
+		Block:             block,
+		Params:            params,
 	}
 }
 
 type Block struct {
-	Name       string
+	Name       string `json:",omitempty"`
 	ReturnType TypeInfo
 	Args       []ArgInfo
 }
 
+func BlockFromAst(fn *declparser.FunctionDecl) *Block {
+	var args []ArgInfo
+	for _, arg := range fn.Args {
+		args = append(args, ArgInfoFromAst(arg))
+	}
+	return &Block{
+		Name:       fn.Name,
+		ReturnType: TypeInfoFromAst(fn.ReturnType),
+		Args:       args,
+	}
+}
+
 type ArgInfo struct {
-	Name string
+	Name string `json:",omitempty"`
 	Type TypeInfo
 }
 
@@ -154,6 +184,28 @@ func readTopicFromURL(pathOrUrl string) topic.Topic {
 	return readTopic(fmt.Sprintf(".%s.%s.json", u.Path, lang))
 }
 
+func collectTypes(types *[]TypeInfo, src reflect.Value) {
+	if src.Kind() == reflect.Ptr {
+		src = src.Elem()
+	}
+	typeInfo := reflect.TypeOf(TypeInfo{})
+	switch src.Kind() {
+	case reflect.Struct:
+		for i := 0; i < src.NumField(); i += 1 {
+			f := src.Field(i)
+			if f.Type() == typeInfo {
+				*types = append(*types, f.Interface().(TypeInfo))
+			} else {
+				collectTypes(types, f)
+			}
+		}
+	case reflect.Slice:
+		for i := 0; i < src.Len(); i += 1 {
+			collectTypes(types, src.Index(i))
+		}
+	}
+}
+
 func readTopic(path string) topic.Topic {
 	b, err := ioutil.ReadFile(path)
 	fatal(err)
@@ -161,6 +213,28 @@ func readTopic(path string) topic.Topic {
 	var t topic.Topic
 	fatal(json.Unmarshal(b, &t))
 	return t
+}
+
+func readSchema(path string) Class {
+	b, err := ioutil.ReadFile(path)
+	fatal(err)
+
+	var c Class
+	fatal(json.Unmarshal(b, &c))
+	return c
+}
+
+func Types(path string) {
+	c := readSchema(path)
+	var types []TypeInfo
+	collectTypes(&types, reflect.ValueOf(c))
+	uniq := make(map[string]bool)
+	for _, t := range types {
+		uniq[t.Name] = true
+	}
+	for k := range uniq {
+		fmt.Println(k)
+	}
 }
 
 func Parse(path string) {
@@ -183,7 +257,7 @@ func Parse(path string) {
 	}
 	for _, topic := range t.Topics {
 		t := readTopicFromURL(topic.Path)
-		if t.Type == "Function" || t.Type == "Enumeration" || t.Type == "Global Variable" {
+		if t.Type == "Function" || t.Type == "Enumeration" || t.Type == "Global Variable" || t.Type == "Enumeration Case" {
 			continue
 		}
 		var isDeprecated bool
@@ -238,5 +312,5 @@ func Parse(path string) {
 
 	b, err := json.MarshalIndent(c, "", "  ")
 	fatal(err)
-	fmt.Println(string(b))
+	fatal(ioutil.WriteFile(strings.Replace(path, "documentation", "schema", 1), b, 0644))
 }

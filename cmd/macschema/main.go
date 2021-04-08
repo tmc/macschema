@@ -16,10 +16,22 @@ func main() {
 	subcommands.Register(&crawl{}, "")
 	subcommands.Register(&stats{}, "")
 	subcommands.Register(&parse{}, "")
+	subcommands.Register(&types{}, "")
 
 	flag.Parse()
 	ctx := context.Background()
 	os.Exit(int(subcommands.Execute(ctx)))
+}
+
+type types struct{}
+
+func (*types) Name() string             { return "types" }
+func (*types) Synopsis() string         { return "types topic as json" }
+func (*types) Usage() string            { return "types <topic>" }
+func (*types) SetFlags(f *flag.FlagSet) {}
+func (p *types) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
+	schema.Types(f.Arg(0))
+	return subcommands.ExitSuccess
 }
 
 type parse struct{}
