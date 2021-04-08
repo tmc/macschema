@@ -49,6 +49,26 @@ func (p *Parser) parseMethod() (*MethodDecl, error) {
 			decl.Args = append(decl.Args, arg)
 
 			tok, lit = p.scan()
+			if tok == COMMA {
+				// clean this up?
+				var dots string
+				_, lit = p.scan()
+				dots += lit
+				_, lit = p.scan()
+				dots += lit
+				_, lit = p.scan()
+				dots += lit
+				if dots != "..." {
+					return nil, fmt.Errorf("found %q, expected ...", dots)
+				}
+				decl.Args = append(decl.Args, ArgInfo{
+					Name: dots,
+				})
+			} else {
+				p.unscan()
+			}
+
+			tok, lit = p.scan()
 			if tok == SEMICOLON {
 				return decl, nil
 			} else if tok == IDENT {
@@ -62,7 +82,7 @@ func (p *Parser) parseMethod() (*MethodDecl, error) {
 				return nil, fmt.Errorf("found %q, expected ; or more arguments", lit)
 			}
 		}
-	} else {
-		return nil, fmt.Errorf("found %q, expected : or ;", lit)
 	}
+
+	return decl, nil
 }

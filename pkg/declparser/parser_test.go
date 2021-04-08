@@ -31,13 +31,100 @@ func TestParser_Parse(t *testing.T) {
 		},
 		{
 			name:  "type method",
-			input: `+ (BOOL)menuBarVisible;`,
+			input: `+ (BOOL)menuBarVisible`,
 			want: &Statement{
 				Method: &MethodDecl{
 					TypeMethod: true,
 					NameParts:  []string{"menuBarVisible"},
 					ReturnType: TypeInfo{
 						Name: "BOOL",
+					},
+				},
+			},
+		},
+		{
+			name:  "type method with variadic arguments",
+			input: `+ (instancetype)arrayWithObjects:(ObjectType)firstObj, ...;`,
+			want: &Statement{
+				Method: &MethodDecl{
+					TypeMethod: true,
+					NameParts:  []string{"arrayWithObjects"},
+					ReturnType: TypeInfo{
+						Name: "instancetype",
+					},
+					Args: []ArgInfo{
+						{
+							Name: "firstObj",
+							Type: TypeInfo{
+								Name: "ObjectType",
+							},
+						},
+						{
+							Name: "...",
+						},
+					},
+				},
+			},
+		},
+		{
+			name:  "type method with nullable double pointer and regular double pointer",
+			input: `+ (void)doSomething:(NSArray * _Nullable *)withData error:(NSError**)error;`,
+			want: &Statement{
+				Method: &MethodDecl{
+					TypeMethod: true,
+					ReturnType: TypeInfo{
+						Name: "void",
+					},
+					NameParts: []string{"doSomething", "error"},
+					Args: []ArgInfo{
+						{
+							Name: "withData",
+							Type: TypeInfo{
+								Name:       "NSArray",
+								IsPtr:      true,
+								IsNullable: true,
+								IsPtrPtr:   true,
+							},
+						},
+						{
+							Name: "error",
+							Type: TypeInfo{
+								Name:     "NSError",
+								IsPtr:    true,
+								IsPtrPtr: true,
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			name:  "type method with nullability annotations",
+			input: `+ (NSArray<NSView *> * _Nullable)interestingObjectsForKey:(NSString * _Nonnull)key;`,
+			want: &Statement{
+				Method: &MethodDecl{
+					TypeMethod: true,
+					ReturnType: TypeInfo{
+						Name: "NSArray",
+						Params: []TypeInfo{
+							{
+								Name:  "NSView",
+								IsPtr: true,
+							},
+						},
+						IsPtr:      true,
+						IsNullable: true,
+					},
+					NameParts: []string{"interestingObjectsForKey"},
+					Args: []ArgInfo{
+						{
+							Name: "key",
+							Type: TypeInfo{
+								Name:      "NSString",
+								IsPtr:     true,
+								IsNonnull: true,
+							},
+						},
 					},
 				},
 			},
@@ -57,6 +144,38 @@ func TestParser_Parse(t *testing.T) {
 							Name: "visible",
 							Type: TypeInfo{
 								Name: "BOOL",
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			name:  "instance method with multi word typed arguments",
+			input: `- (void)numberWithLongLong:(unsigned long long)value atIndex:(unsigned int)idx keyCode:(unsigned short)code;`,
+			want: &Statement{
+				Method: &MethodDecl{
+					ReturnType: TypeInfo{
+						Name: "void",
+					},
+					NameParts: []string{"numberWithLongLong", "atIndex", "keyCode"},
+					Args: []ArgInfo{
+						{
+							Name: "value",
+							Type: TypeInfo{
+								Name: "unsigned long long",
+							},
+						},
+						{
+							Name: "idx",
+							Type: TypeInfo{
+								Name: "unsigned int",
+							},
+						},
+						{
+							Name: "code",
+							Type: TypeInfo{
+								Name: "unsigned short",
 							},
 						},
 					},
@@ -105,6 +224,65 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
+			name:  "instance method with function pointer argument",
+			input: `- (void)sortSubviewsUsingFunction:(NSComparisonResult (*)(__kindof NSView *, __kindof NSView *, void *))compare;`,
+			want: &Statement{
+				Method: &MethodDecl{
+					ReturnType: TypeInfo{
+						Name: "void",
+					},
+					NameParts: []string{"sortSubviewsUsingFunction"},
+					Args: []ArgInfo{
+						{
+							Name: "compare",
+							Type: TypeInfo{
+								Func: &FunctionDecl{
+									IsPtr: true,
+									ReturnType: TypeInfo{
+										Name: "NSComparisonResult",
+									},
+									Args: []ArgInfo{
+										{
+											Type: TypeInfo{
+												Name:     "NSView",
+												IsKindOf: true,
+												IsPtr:    true,
+											},
+										},
+										{
+											Type: TypeInfo{
+												Name:     "NSView",
+												IsKindOf: true,
+												IsPtr:    true,
+											},
+										},
+										{
+											Type: TypeInfo{
+												Name:  "void",
+												IsPtr: true,
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			name:  "instance method returning oneway void",
+			input: `- (oneway void)releaseGlobally;`,
+			want: &Statement{
+				Method: &MethodDecl{
+					ReturnType: TypeInfo{
+						Name: "oneway void",
+					},
+					NameParts: []string{"releaseGlobally"},
+				},
+			},
+		},
+		{
 			name:  "instance method",
 			input: `- (NSRect)convertRectToBacking:(NSRect)rect;`,
 			want: &Statement{
@@ -118,6 +296,35 @@ func TestParser_Parse(t *testing.T) {
 							Name: "rect",
 							Type: TypeInfo{
 								Name: "NSRect",
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			name:  "instance method with null unspecified argument",
+			input: `- (BOOL)instantiateNibWithOwner:(id)owner topLevelObjects:(NSArray * _Null_unspecified *)topLevelObjects;`,
+			want: &Statement{
+				Method: &MethodDecl{
+					ReturnType: TypeInfo{
+						Name: "BOOL",
+					},
+					NameParts: []string{"instantiateNibWithOwner", "topLevelObjects"},
+					Args: []ArgInfo{
+						{
+							Name: "owner",
+							Type: TypeInfo{
+								Name: "id",
+							},
+						},
+						{
+							Name: "topLevelObjects",
+							Type: TypeInfo{
+								Name:              "NSArray",
+								IsPtr:             true,
+								IsPtrPtr:          true,
+								IsNullUnspecified: true,
 							},
 						},
 					},

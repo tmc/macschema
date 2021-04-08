@@ -25,6 +25,7 @@ const (
 	COMMA
 	EQUAL
 	CARET
+	DOT
 
 	INTERFACE
 	PROPERTY
@@ -35,6 +36,9 @@ const (
 	ENUM
 
 	KINDOF
+	NULLABLE
+	NONNULL
+	NULLUNSPECIFIED
 )
 
 var eof = rune(0)
@@ -128,6 +132,8 @@ func (s *scanner) Scan() (tok token, lit string) {
 		return EQUAL, string(ch)
 	case '^':
 		return CARET, string(ch)
+	case '.':
+		return DOT, string(ch)
 	}
 
 	return ILLEGAL, string(ch)
@@ -180,6 +186,15 @@ func (s *scanner) scanIdent() (tok token, lit string) {
 	}
 	if buf.String() == "__kindof" {
 		return KINDOF, buf.String()
+	}
+	if buf.String() == "_Nullable" {
+		return NULLABLE, buf.String()
+	}
+	if buf.String() == "_Nonnull" {
+		return NONNULL, buf.String()
+	}
+	if buf.String() == "_Null_unspecified" {
+		return NULLUNSPECIFIED, buf.String()
 	}
 
 	// Otherwise return as a regular identifier.

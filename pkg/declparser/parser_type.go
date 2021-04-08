@@ -26,6 +26,22 @@ func (p *Parser) scanType(parens bool) (*TypeInfo, error) {
 		return nil, fmt.Errorf("found %q, expected identifier", lit)
 	}
 	ti.Name = lit
+	if lit == "unsigned" || lit == "signed" || lit == "long" || lit == "oneway" {
+		tok, lit = p.scan()
+		if tok == IDENT {
+			ti.Name += " " + lit
+			if lit == "long" {
+				tok, lit = p.scan()
+				if tok == IDENT {
+					ti.Name += " " + lit
+				} else {
+					p.unscan()
+				}
+			}
+		} else {
+			p.unscan()
+		}
+	}
 
 	tok, lit = p.scan()
 	if tok == LEFTANGLE {
@@ -58,13 +74,21 @@ func (p *Parser) scanType(parens bool) (*TypeInfo, error) {
 			ti.Block = &FunctionDecl{IsBlock: true}
 			ti.Block.ReturnType.Name = ti.Name
 			ti.Name = ""
+		} else if tok == ASTERISK {
+			ti.Func = &FunctionDecl{IsPtr: true}
+			ti.Func.ReturnType.Name = ti.Name
+			ti.Name = ""
 		} else {
-			return nil, fmt.Errorf("found %q, expected ^ for block", lit)
+			return nil, fmt.Errorf("found %q, expected ^ for block or * for func ptr", lit)
 		}
 
 		tok, lit = p.scan()
 		if tok == IDENT {
-			ti.Block.Name = lit
+			if ti.Block != nil {
+				ti.Block.Name = lit
+			} else if ti.Func != nil {
+				ti.Func.Name = lit
+			}
 		} else {
 			p.unscan()
 		}
@@ -87,12 +111,17 @@ func (p *Parser) scanType(parens bool) (*TypeInfo, error) {
 			arg.Type = *typ
 
 			tok, lit = p.scan()
-			if tok != IDENT {
-				return nil, fmt.Errorf("found %q, expected arg identifier", lit)
+			if tok == IDENT {
+				arg.Name = lit
+			} else {
+				p.unscan()
 			}
-			arg.Name = lit
 
-			ti.Block.Args = append(ti.Block.Args, arg)
+			if ti.Block != nil {
+				ti.Block.Args = append(ti.Block.Args, arg)
+			} else if ti.Func != nil {
+				ti.Func.Args = append(ti.Func.Args, arg)
+			}
 
 			if tok, _ := p.scan(); tok != COMMA {
 				p.unscan()
@@ -104,6 +133,25 @@ func (p *Parser) scanType(parens bool) (*TypeInfo, error) {
 			return nil, fmt.Errorf("found %q, expected ) for block args", lit)
 		}
 
+	} else {
+		p.unscan()
+	}
+
+	tok, lit = p.scan()
+	switch tok {
+	case NULLABLE:
+		ti.IsNullable = true
+	case NONNULL:
+		ti.IsNonnull = true
+	case NULLUNSPECIFIED:
+		ti.IsNullUnspecified = true
+	default:
+		p.unscan()
+	}
+
+	tok, lit = p.scan()
+	if tok == ASTERISK {
+		ti.IsPtrPtr = true
 	} else {
 		p.unscan()
 	}

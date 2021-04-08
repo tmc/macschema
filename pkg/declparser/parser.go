@@ -124,13 +124,19 @@ type FunctionDecl struct {
 	ReturnType TypeInfo
 	Args       []ArgInfo
 	IsBlock    bool
+	IsPtr      bool
 }
 
 func (f FunctionDecl) String() string {
 	b := &strings.Builder{}
 	b.WriteString(f.ReturnType.String())
-	if f.IsBlock {
-		b.WriteString("(^")
+	if f.IsBlock || f.IsPtr {
+		b.WriteString("(")
+		if f.IsBlock {
+			b.WriteString("^")
+		} else {
+			b.WriteString("*")
+		}
 		b.WriteString(f.Name)
 		b.WriteString(")")
 	} else {
@@ -160,7 +166,7 @@ func (m *MethodDecl) Name() string {
 	if len(m.NameParts) == 0 {
 		return ""
 	}
-	if len(m.NameParts) == 1 {
+	if len(m.NameParts) == 1 && len(m.Args) == 0 {
 		return m.NameParts[0]
 	}
 	return strings.Join(append(m.NameParts, ""), ":")
@@ -190,12 +196,17 @@ func (m MethodDecl) String() string {
 }
 
 type TypeInfo struct {
-	Name     string
-	IsPtr    bool
-	IsConst  bool
-	IsKindOf bool
-	Block    *FunctionDecl
-	Params   []TypeInfo
+	Name              string
+	IsPtr             bool
+	IsPtrPtr          bool
+	IsConst           bool
+	IsKindOf          bool
+	IsNullable        bool
+	IsNonnull         bool
+	IsNullUnspecified bool
+	Block             *FunctionDecl
+	Func              *FunctionDecl
+	Params            []TypeInfo
 }
 
 func (t TypeInfo) String() string {
