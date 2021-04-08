@@ -1,0 +1,15 @@
+{
+  "Name": "NSRect",
+  "Description": "A rectangle.",
+  "Declaration": "typedef CGRect NSRect;",
+  "Frameworks": [
+    "Foundation"
+  ],
+  "Platforms": [
+    "macOS 10.0+",
+    "Mac Catalyst 13.0+"
+  ],
+  "URL": "https://developer.apple.com/documentation/foundation/nsrect?language=objc",
+  "ParseDate": "2021-03-31T12:37:02.404042-05:00",
+  "ParseVersion": 1
+}

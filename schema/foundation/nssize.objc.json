@@ -1,0 +1,15 @@
+{
+  "Name": "NSSize",
+  "Description": "A two-dimensional size.",
+  "Declaration": "typedef CGSize NSSize;",
+  "Frameworks": [
+    "Foundation"
+  ],
+  "Platforms": [
+    "macOS 10.0+",
+    "Mac Catalyst 13.0+"
+  ],
+  "URL": "https://developer.apple.com/documentation/foundation/nssize?language=objc",
+  "ParseDate": "2021-03-31T12:37:10.109743-05:00",
+  "ParseVersion": 1
+}
