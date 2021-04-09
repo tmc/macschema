@@ -7,6 +7,8 @@ import (
 // TokenBuffer represents a wrapper for scanner to add a buffer.
 // It provides a fixed-length circular buffer that can be unread.
 type TokenBuffer struct {
+	IgnoreWhitespace bool
+
 	s   *Scanner
 	i   int // buffer index
 	n   int // buffer size
@@ -40,10 +42,16 @@ func (s *TokenBuffer) ScanFunc(scan func() (Token, Pos, string)) (tok Token, pos
 		return s.Current()
 	}
 
+	tok, pos, lit = scan()
+
+	if s.IgnoreWhitespace && tok == WS {
+		tok, pos, lit = scan()
+	}
+
 	// Move buffer position forward and save the token.
 	s.i = (s.i + 1) % len(s.buf)
 	buf := &s.buf[s.i]
-	buf.tok, buf.pos, buf.lit = scan()
+	buf.tok, buf.pos, buf.lit = tok, pos, lit
 
 	return s.Current()
 }
@@ -57,7 +65,14 @@ func (s *TokenBuffer) Current() (tok Token, pos Pos, lit string) {
 	return buf.tok, buf.pos, buf.lit
 }
 
-// Peek returns the next rune from the scanner.
-func (s *TokenBuffer) Peek() rune {
+// PeekRune returns the next rune from the scanner.
+func (s *TokenBuffer) PeekRune() rune {
 	return s.s.Peek()
+}
+
+// Peek reads the next token and then unscans.
+func (s *TokenBuffer) Peek() (tok Token, pos Pos, lit string) {
+	tok, pos, lit = s.Scan()
+	s.Unscan()
+	return
 }
