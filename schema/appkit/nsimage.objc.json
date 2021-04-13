@@ -1097,7 +1097,7 @@
         ]
       },
       "Attrs": {
-        "Weak": true
+        "weak": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsimage/1519926-delegate?language=objc"
     },
@@ -1119,7 +1119,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Getter": "isTemplate"
+        "getter": "isTemplate"
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsimage/1520017-template?language=objc"
     },
@@ -1138,8 +1138,8 @@
         ]
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsimage/1519858-representations?language=objc"
     },
@@ -1181,8 +1181,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isValid"
+        "getter": "isValid",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsimage/1519991-valid?language=objc"
     },
@@ -1195,7 +1195,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsimage/1520059-backgroundcolor?language=objc"
     },
@@ -1248,8 +1248,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nullable": true
+        "nullable": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsimage/1519841-tiffrepresentation?language=objc"
     },
@@ -1262,7 +1263,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsimage/1519943-accessibilitydescription?language=objc"
     },
@@ -1344,8 +1345,7 @@
         {
           "Name": "drawingHandler",
           "Type": {
-            "Block": {
-              "Name": "",
+            "Func": {
               "ReturnType": {
                 "Name": "BOOL"
               },
@@ -1468,9 +1468,9 @@
         ]
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true,
-        "Copy": true
+        "class": true,
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsimage/1519988-imagetypes?language=objc"
     },
@@ -1489,9 +1489,9 @@
         ]
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true,
-        "Copy": true
+        "class": true,
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsimage/1519899-imageunfilteredtypes?language=objc"
     }

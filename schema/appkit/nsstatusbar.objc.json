@@ -49,8 +49,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isVertical"
+        "getter": "isVertical",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusbar/1530580-vertical?language=objc"
     },
@@ -62,7 +62,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusbar/1534591-thickness?language=objc"
     }
@@ -77,8 +77,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true
+        "class": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusbar/1530619-systemstatusbar?language=objc"
     }

@@ -80,7 +80,7 @@
         "Name": "NSURLRequestCachePolicy"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsurlrequest/1407944-cachepolicy?language=objc"
     },
@@ -93,9 +93,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsurlrequest/1413030-httpmethod?language=objc"
     },
@@ -108,9 +108,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsurlrequest/1408996-url?language=objc"
     },
@@ -123,9 +123,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsurlrequest/1411317-httpbody?language=objc"
     },
@@ -138,9 +138,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nullable": true,
-        "Retain": true
+        "nullable": true,
+        "readonly": true,
+        "retain": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsurlrequest/1407341-httpbodystream?language=objc"
     },
@@ -153,9 +153,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsurlrequest/1414134-maindocumenturl?language=objc"
     },
@@ -178,9 +178,9 @@
         ]
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsurlrequest/1418477-allhttpheaderfields?language=objc"
     },
@@ -192,7 +192,7 @@
         "Name": "NSTimeInterval"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsurlrequest/1418229-timeoutinterval?language=objc"
     },
@@ -204,7 +204,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsurlrequest/1418369-httpshouldhandlecookies?language=objc"
     },
@@ -216,7 +216,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsurlrequest/1409170-httpshouldusepipelining?language=objc"
     },
@@ -228,7 +228,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsurlrequest/1412032-allowscellularaccess?language=objc"
     },
@@ -240,7 +240,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsurlrequest/3325678-allowsconstrainednetworkaccess?language=objc"
     },
@@ -252,7 +252,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsurlrequest/3325679-allowsexpensivenetworkaccess?language=objc"
     },
@@ -264,7 +264,7 @@
         "Name": "NSURLRequestNetworkServiceType"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsurlrequest/1418333-networkservicetype?language=objc"
     },
@@ -276,7 +276,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsurlrequest/3735880-assumeshttp3capable?language=objc"
     }
@@ -340,8 +340,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true
+        "class": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsurlrequest/1416510-supportssecurecoding?language=objc"
     }

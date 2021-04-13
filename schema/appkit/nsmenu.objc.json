@@ -687,7 +687,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenu/1518141-menubarheight?language=objc"
     },
@@ -699,7 +699,7 @@
         "Name": "NSInteger"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenu/1518202-numberofitems?language=objc"
     },
@@ -718,7 +718,7 @@
         ]
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenu/1518186-itemarray?language=objc"
     },
@@ -730,7 +730,9 @@
         "Name": "NSMenu",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "assign": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenu/1518204-supermenu?language=objc"
     },
     {
@@ -741,8 +743,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isTornOff"
+        "getter": "isTornOff",
+        "readonly": true
       },
       "Deprecated": true,
       "URL": "https://developer.apple.com/documentation/appkit/nsmenu/1518190-tornoff?language=objc"
@@ -765,7 +767,9 @@
         "Name": "NSFont",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenu/1518230-font?language=objc"
     },
     {
@@ -777,7 +781,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenu/1518192-title?language=objc"
     },
@@ -799,7 +803,7 @@
         "Name": "NSSize"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenu/1518185-size?language=objc"
     },
@@ -811,7 +815,7 @@
         "Name": "NSMenuProperties"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenu/1518245-propertiestoupdate?language=objc"
     },
@@ -855,8 +859,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nullable": true
+        "nullable": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenu/1518222-highlighteditem?language=objc"
     },
@@ -883,7 +888,7 @@
         ]
       },
       "Attrs": {
-        "Weak": true
+        "weak": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenu/1518169-delegate?language=objc"
     }

@@ -660,7 +660,7 @@
         ]
       },
       "Attrs": {
-        "Weak": true
+        "weak": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/1428705-delegate?language=objc"
     },
@@ -673,8 +673,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nullable": true
+        "nullable": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/1428668-currentevent?language=objc"
     },
@@ -686,8 +687,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isRunning"
+        "getter": "isRunning",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/1428759-running?language=objc"
     },
@@ -699,8 +700,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isActive"
+        "getter": "isActive",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/1428493-active?language=objc"
     },
@@ -712,7 +713,7 @@
         "Name": "NSRemoteNotificationType"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/1428776-enabledremotenotificationtypes?language=objc"
     },
@@ -724,8 +725,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isRegisteredForRemoteNotifications"
+        "getter": "isRegisteredForRemoteNotifications",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/2967173-registeredforremotenotifications?language=objc"
     },
@@ -737,7 +738,9 @@
         "Name": "NSAppearance",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/2967170-appearance?language=objc"
     },
     {
@@ -749,7 +752,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/2967171-effectiveappearance?language=objc"
     },
@@ -761,7 +765,7 @@
         "Name": "NSApplicationPresentationOptions"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/1428717-currentsystempresentationoptions?language=objc"
     },
@@ -783,7 +787,7 @@
         "Name": "NSUserInterfaceLayoutDirection"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/1428556-userinterfacelayoutdirection?language=objc"
     },
@@ -796,7 +800,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/1428671-docktile?language=objc"
     },
@@ -808,7 +813,9 @@
         "Name": "NSImage",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/1428744-applicationiconimage?language=objc"
     },
     {
@@ -819,7 +826,9 @@
         "Name": "NSMenu",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/1428644-helpmenu?language=objc"
     },
     {
@@ -829,7 +838,9 @@
       "Type": {
         "Name": "id"
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/1428467-servicesprovider?language=objc"
     },
     {
@@ -840,8 +851,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isFullKeyboardAccessEnabled"
+        "getter": "isFullKeyboardAccessEnabled",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/1428469-fullkeyboardaccessenabled?language=objc"
     },
@@ -860,8 +871,8 @@
         ]
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/1494283-ordereddocuments?language=objc"
     },
@@ -880,8 +891,8 @@
         ]
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/1494287-orderedwindows?language=objc"
     }
@@ -925,11 +936,14 @@
       "Type": {
         "Name": "NSApplication",
         "IsPtr": true,
-        "IsKindOf": true
+        "Annotations": [
+          "__kindof"
+        ]
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true
+        "class": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsapplication/1428360-sharedapplication?language=objc"
     }

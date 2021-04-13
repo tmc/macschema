@@ -4,7 +4,7 @@
   "Declaration": "@interface NSBundle : NSObject",
   "InstanceMethods": [
     {
-      "Name": "initWithURL",
+      "Name": "initWithURL:",
       "Description": "Returns an NSBundle object initialized to correspond to the specified file URL.",
       "Declaration": "- (instancetype)initWithURL:(NSURL *)url;",
       "Return": {
@@ -22,7 +22,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1409352-initwithurl?language=objc"
     },
     {
-      "Name": "initWithPath",
+      "Name": "initWithPath:",
       "Description": "Returns an NSBundle object initialized to correspond to the specified directory.",
       "Declaration": "- (instancetype)initWithPath:(NSString *)path;",
       "Return": {
@@ -105,7 +105,9 @@
             "Name": "NSArray",
             "IsPtr": true,
             "IsPtrPtr": true,
-            "IsNullable": true
+            "Annotations": [
+              "_nullable"
+            ]
           }
         }
       ],
@@ -485,7 +487,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1416940-pathsforresourcesoftype?language=objc"
     },
     {
-      "Name": "URLForImageResource",
+      "Name": "URLForImageResource:",
       "Description": "Returns the location of the specified image resource as an NSURL.",
       "Declaration": "- (NSURL *)URLForImageResource:(NSImageName)name;",
       "Return": {
@@ -503,7 +505,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1519886-urlforimageresource?language=objc"
     },
     {
-      "Name": "pathForImageResource",
+      "Name": "pathForImageResource:",
       "Description": "Returns the location of the specified image resource file.",
       "Declaration": "- (NSString *)pathForImageResource:(NSImageName)name;",
       "Return": {
@@ -521,7 +523,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1519854-pathforimageresource?language=objc"
     },
     {
-      "Name": "imageForResource",
+      "Name": "imageForResource:",
       "Description": "Returns an NSImage instance associated with the specified name, which can be backed by multiple files representing different resolution versions of the image.",
       "Declaration": "- (NSImage *)imageForResource:(NSImageName)name;",
       "Return": {
@@ -539,7 +541,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1519901-imageforresource?language=objc"
     },
     {
-      "Name": "pathForSoundResource",
+      "Name": "pathForSoundResource:",
       "Description": "Returns the location of the specified sound resource file.",
       "Declaration": "- (NSString *)pathForSoundResource:(NSSoundName)name;",
       "Return": {
@@ -590,7 +592,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1417694-localizedstringforkey?language=objc"
     },
     {
-      "Name": "contextHelpForKey",
+      "Name": "contextHelpForKey:",
       "Description": "Returns the context-sensitive help for the specified key from the bundle's help file.",
       "Declaration": "- (NSAttributedString *)contextHelpForKey:(NSHelpManagerContextHelpKey)key;",
       "Return": {
@@ -608,7 +610,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1500918-contexthelpforkey?language=objc"
     },
     {
-      "Name": "URLForAuxiliaryExecutable",
+      "Name": "URLForAuxiliaryExecutable:",
       "Description": "Returns the file URL of the executable with the specified name in the receiver’s bundle.",
       "Declaration": "- (NSURL *)URLForAuxiliaryExecutable:(NSString *)executableName;",
       "Return": {
@@ -627,7 +629,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1411412-urlforauxiliaryexecutable?language=objc"
     },
     {
-      "Name": "pathForAuxiliaryExecutable",
+      "Name": "pathForAuxiliaryExecutable:",
       "Description": "Returns the full pathname of the executable with the specified name in the receiver’s bundle.",
       "Declaration": "- (NSString *)pathForAuxiliaryExecutable:(NSString *)executableName;",
       "Return": {
@@ -646,7 +648,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1415214-pathforauxiliaryexecutable?language=objc"
     },
     {
-      "Name": "objectForInfoDictionaryKey",
+      "Name": "objectForInfoDictionaryKey:",
       "Description": "Returns the value associated with the specified key in the receiver's information property list.",
       "Declaration": "- (id)objectForInfoDictionaryKey:(NSString *)key;",
       "Return": {
@@ -694,7 +696,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1614845-setpreservationpriority?language=objc"
     },
     {
-      "Name": "preservationPriorityForTag",
+      "Name": "preservationPriorityForTag:",
       "Description": "Returns the current preservation priority for the specified tag.",
       "Declaration": "- (double)preservationPriorityForTag:(NSString *)tag;",
       "Return": {
@@ -712,7 +714,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1614839-preservationpriorityfortag?language=objc"
     },
     {
-      "Name": "classNamed",
+      "Name": "classNamed:",
       "Description": "Returns the Class object for the specified name.",
       "Declaration": "- (Class)classNamed:(NSString *)className;",
       "Return": {
@@ -730,7 +732,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1407299-classnamed?language=objc"
     },
     {
-      "Name": "preflightAndReturnError",
+      "Name": "preflightAndReturnError:",
       "Description": "Returns a Boolean value indicating whether the bundle’s executable code could be loaded successfully.",
       "Declaration": "- (BOOL)preflightAndReturnError:(NSError * _Nullable *)error;",
       "Return": {
@@ -743,7 +745,9 @@
             "Name": "NSError",
             "IsPtr": true,
             "IsPtrPtr": true,
-            "IsNullable": true
+            "Annotations": [
+              "_nullable"
+            ]
           }
         }
       ],
@@ -760,7 +764,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1415927-load?language=objc"
     },
     {
-      "Name": "loadAndReturnError",
+      "Name": "loadAndReturnError:",
       "Description": "Loads the bundle’s executable code and returns any errors.",
       "Declaration": "- (BOOL)loadAndReturnError:(NSError * _Nullable *)error;",
       "Return": {
@@ -773,7 +777,9 @@
             "Name": "NSError",
             "IsPtr": true,
             "IsPtrPtr": true,
-            "IsNullable": true
+            "Annotations": [
+              "_nullable"
+            ]
           }
         }
       ],
@@ -800,9 +806,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1414821-resourceurl?language=objc"
     },
@@ -815,9 +821,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1410470-executableurl?language=objc"
     },
@@ -830,9 +836,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1417617-privateframeworksurl?language=objc"
     },
@@ -845,9 +851,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1411774-sharedframeworksurl?language=objc"
     },
@@ -860,9 +866,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1409603-builtinpluginsurl?language=objc"
     },
@@ -875,9 +881,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1416823-sharedsupporturl?language=objc"
     },
@@ -890,9 +896,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1407276-appstorereceipturl?language=objc"
     },
@@ -905,9 +911,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1417723-resourcepath?language=objc"
     },
@@ -920,9 +926,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1409078-executablepath?language=objc"
     },
@@ -935,9 +941,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1415562-privateframeworkspath?language=objc"
     },
@@ -950,9 +956,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1417226-sharedframeworkspath?language=objc"
     },
@@ -965,9 +971,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1408900-builtinpluginspath?language=objc"
     },
@@ -980,9 +986,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1411609-sharedsupportpath?language=objc"
     },
@@ -995,8 +1001,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1415654-bundleurl?language=objc"
     },
@@ -1009,8 +1015,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1407973-bundlepath?language=objc"
     },
@@ -1023,9 +1029,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1418023-bundleidentifier?language=objc"
     },
@@ -1047,9 +1053,9 @@
         ]
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1413477-infodictionary?language=objc"
     },
@@ -1068,8 +1074,8 @@
         ]
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1417415-localizations?language=objc"
     },
@@ -1088,8 +1094,8 @@
         ]
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1413220-preferredlocalizations?language=objc"
     },
@@ -1102,9 +1108,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1417526-developmentlocalization?language=objc"
     },
@@ -1126,9 +1132,9 @@
         ]
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1407645-localizedinfodictionary?language=objc"
     },
@@ -1140,7 +1146,7 @@
         "Name": "Class"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1409048-principalclass?language=objc"
     },
@@ -1159,9 +1165,9 @@
         ]
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1415499-executablearchitectures?language=objc"
     },
@@ -1173,15 +1179,15 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isLoaded"
+        "getter": "isLoaded",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1413594-loaded?language=objc"
     }
   ],
   "TypeMethods": [
     {
-      "Name": "bundleWithURL",
+      "Name": "bundleWithURL:",
       "Description": "Returns an NSBundle object that corresponds to the specified file URL.",
       "Declaration": "+ (instancetype)bundleWithURL:(NSURL *)url;",
       "Return": {
@@ -1199,7 +1205,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1494992-bundlewithurl?language=objc"
     },
     {
-      "Name": "bundleWithPath",
+      "Name": "bundleWithPath:",
       "Description": "Returns an NSBundle object that corresponds to the specified directory.",
       "Declaration": "+ (instancetype)bundleWithPath:(NSString *)path;",
       "Return": {
@@ -1217,7 +1223,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1495012-bundlewithpath?language=objc"
     },
     {
-      "Name": "bundleForClass",
+      "Name": "bundleForClass:",
       "Description": "Returns the NSBundle object with which the specified class is associated.",
       "Declaration": "+ (NSBundle *)bundleForClass:(Class)aClass;",
       "Return": {
@@ -1235,7 +1241,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1417717-bundleforclass?language=objc"
     },
     {
-      "Name": "bundleWithIdentifier",
+      "Name": "bundleWithIdentifier:",
       "Description": "Returns the NSBundle instance that has the specified bundle identifier.",
       "Declaration": "+ (NSBundle *)bundleWithIdentifier:(NSString *)identifier;",
       "Return": {
@@ -1456,7 +1462,7 @@
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1415876-pathsforresourcesoftype?language=objc"
     },
     {
-      "Name": "preferredLocalizationsFromArray",
+      "Name": "preferredLocalizationsFromArray:",
       "Description": "Returns one or more localizations from the specified list that a bundle object would use to locate resources for the current user.",
       "Declaration": "+ (NSArray\u003cNSString *\u003e *)preferredLocalizationsFromArray:(NSArray\u003cNSString *\u003e *)localizationsArray;",
       "Return": {
@@ -1541,8 +1547,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true
+        "class": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1410786-mainbundle?language=objc"
     },
@@ -1561,9 +1568,9 @@
         ]
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true,
-        "Copy": true
+        "class": true,
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1408056-allframeworks?language=objc"
     },
@@ -1582,9 +1589,9 @@
         ]
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true,
-        "Copy": true
+        "class": true,
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsbundle/1413705-allbundles?language=objc"
     }

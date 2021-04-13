@@ -287,7 +287,7 @@
         {
           "Name": "completionHandler",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
@@ -399,13 +399,12 @@
         {
           "Name": "completionHandler",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
               "Args": [
                 {
-                  "Name": "",
                   "Type": {
                     "Name": "id"
                   }
@@ -456,13 +455,12 @@
         {
           "Name": "completionHandler",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
               "Args": [
                 {
-                  "Name": "",
                   "Type": {
                     "Name": "id"
                   }
@@ -529,13 +527,12 @@
         {
           "Name": "completionHandler",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
               "Args": [
                 {
-                  "Name": "",
                   "Type": {
                     "Name": "id"
                   }
@@ -572,7 +569,7 @@
         {
           "Name": "completionHandler",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
@@ -616,7 +613,7 @@
         {
           "Name": "completionHandler",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
@@ -653,20 +650,18 @@
         {
           "Name": "completionHandler",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
               "Args": [
                 {
-                  "Name": "",
                   "Type": {
                     "Name": "NSData",
                     "IsPtr": true
                   }
                 },
                 {
-                  "Name": "",
                   "Type": {
                     "Name": "NSError",
                     "IsPtr": true
@@ -719,13 +714,12 @@
         {
           "Name": "completionHandler",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
               "Args": [
                 {
-                  "Name": "",
                   "Type": {
                     "Name": "void"
                   }
@@ -748,13 +742,12 @@
         {
           "Name": "completionHandler",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
               "Args": [
                 {
-                  "Name": "",
                   "Type": {
                     "Name": "WKMediaPlaybackState"
                   }
@@ -777,13 +770,12 @@
         {
           "Name": "completionHandler",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
               "Args": [
                 {
-                  "Name": "",
                   "Type": {
                     "Name": "void"
                   }
@@ -813,13 +805,12 @@
         {
           "Name": "completionHandler",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
               "Args": [
                 {
-                  "Name": "",
                   "Type": {
                     "Name": "WKDownload",
                     "IsPtr": true
@@ -850,13 +841,12 @@
         {
           "Name": "completionHandler",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
               "Args": [
                 {
-                  "Name": "",
                   "Type": {
                     "Name": "WKDownload",
                     "IsPtr": true
@@ -880,13 +870,12 @@
         {
           "Name": "completionHandler",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
               "Args": [
                 {
-                  "Name": "",
                   "Type": {
                     "Name": "void"
                   }
@@ -909,9 +898,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nonatomic": true,
-        "Copy": true
+        "copy": true,
+        "nonatomic": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1414979-configuration?language=objc"
     },
@@ -928,9 +917,9 @@
         ]
       },
       "Attrs": {
-        "Weak": true,
-        "Nonatomic": true,
-        "Nullable": true
+        "nonatomic": true,
+        "nullable": true,
+        "weak": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1415009-uidelegate?language=objc"
     },
@@ -947,9 +936,9 @@
         ]
       },
       "Attrs": {
-        "Weak": true,
-        "Nonatomic": true,
-        "Nullable": true
+        "nonatomic": true,
+        "nullable": true,
+        "weak": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1414971-navigationdelegate?language=objc"
     },
@@ -961,9 +950,9 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Nonatomic": true,
-        "Getter": "isLoading"
+        "getter": "isLoading",
+        "nonatomic": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1414964-loading?language=objc"
     },
@@ -975,8 +964,8 @@
         "Name": "double"
       },
       "Attrs": {
-        "Readonly": true,
-        "Nonatomic": true
+        "nonatomic": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1415007-estimatedprogress?language=objc"
     },
@@ -989,8 +978,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nonatomic": true
+        "nonatomic": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1614784-scrollview?language=objc"
     },
@@ -1003,10 +993,10 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nonatomic": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nonatomic": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1415015-title?language=objc"
     },
@@ -1019,10 +1009,10 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nonatomic": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nonatomic": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1415005-url?language=objc"
     },
@@ -1035,9 +1025,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Nonatomic": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nonatomic": true,
+        "nullable": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/3516410-mediatype?language=objc"
     },
@@ -1050,9 +1040,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Nonatomic": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nonatomic": true,
+        "nullable": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1414950-customuseragent?language=objc"
     },
@@ -1064,9 +1054,9 @@
         "Name": "SecTrustRef"
       },
       "Attrs": {
-        "Readonly": true,
-        "Nonatomic": true,
-        "Nullable": true
+        "nonatomic": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1791920-servertrust?language=objc"
     },
@@ -1078,8 +1068,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Nonatomic": true
+        "nonatomic": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1415002-hasonlysecurecontent?language=objc"
     },
@@ -1091,7 +1081,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Nonatomic": true
+        "nonatomic": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/3516411-pagezoom?language=objc"
     },
@@ -1103,7 +1093,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Nonatomic": true
+        "nonatomic": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1414983-allowsmagnification?language=objc"
     },
@@ -1115,7 +1105,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Nonatomic": true
+        "nonatomic": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1414985-magnification?language=objc"
     },
@@ -1127,7 +1117,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Nonatomic": true
+        "nonatomic": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1414995-allowsbackforwardnavigationgestu?language=objc"
     },
@@ -1140,8 +1130,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nonatomic": true
+        "nonatomic": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1414977-backforwardlist?language=objc"
     },
@@ -1153,8 +1144,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Nonatomic": true
+        "nonatomic": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1414966-cangoback?language=objc"
     },
@@ -1166,8 +1157,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Nonatomic": true
+        "nonatomic": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1414962-cangoforward?language=objc"
     },
@@ -1179,7 +1170,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Nonatomic": true
+        "nonatomic": true
       },
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1415000-allowslinkpreview?language=objc"
     },
@@ -1192,9 +1183,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nonatomic": true,
-        "Copy": true
+        "copy": true,
+        "nonatomic": true,
+        "readonly": true
       },
       "Deprecated": true,
       "URL": "https://developer.apple.com/documentation/webkit/wkwebview/1414958-certificatechain?language=objc"

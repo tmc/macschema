@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/progrium/macschema/pkg/declparser"
+	"github.com/progrium/macschema/pkg/declparse"
 	"github.com/progrium/macschema/pkg/topic"
 )
 
@@ -36,53 +36,49 @@ type Class struct {
 }
 
 type TypeInfo struct {
-	Name              string     `json:",omitempty"`
-	IsPtr             bool       `json:",omitempty"`
-	IsPtrPtr          bool       `json:",omitempty"`
-	IsNullable        bool       `json:",omitempty"`
-	IsNonnull         bool       `json:",omitempty"`
-	IsNullUnspecified bool       `json:",omitempty"`
-	IsConst           bool       `json:",omitempty"`
-	IsKindOf          bool       `json:",omitempty"`
-	Block             *Block     `json:",omitempty"`
-	Params            []TypeInfo `json:",omitempty"`
+	Name        string     `json:",omitempty"`
+	IsPtr       bool       `json:",omitempty"`
+	IsPtrPtr    bool       `json:",omitempty"`
+	Annotations []string   `json:",omitempty"`
+	Func        *Func      `json:",omitempty"`
+	Params      []TypeInfo `json:",omitempty"`
 }
 
-func TypeInfoFromAst(ti declparser.TypeInfo) TypeInfo {
-	var block *Block
-	if ti.Block != nil {
-		block = BlockFromAst(ti.Block)
+func TypeInfoFromAst(ti declparse.TypeInfo) TypeInfo {
+	var fn *Func
+	if ti.Func != nil {
+		fn = FuncFromAst(ti.Func)
 	}
 	var params []TypeInfo
 	for _, param := range ti.Params {
 		params = append(params, TypeInfoFromAst(param))
 	}
+	var annots []string
+	for annot := range ti.Annots {
+		annots = append(annots, strings.ToLower(annot.String()))
+	}
 	return TypeInfo{
-		Name:              ti.Name,
-		IsPtr:             ti.IsPtr,
-		IsPtrPtr:          ti.IsPtrPtr,
-		IsNullable:        ti.IsNullable,
-		IsNonnull:         ti.IsNonnull,
-		IsNullUnspecified: ti.IsNullUnspecified,
-		IsConst:           ti.IsConst,
-		IsKindOf:          ti.IsKindOf,
-		Block:             block,
-		Params:            params,
+		Name:        ti.Name,
+		IsPtr:       ti.IsPtr,
+		IsPtrPtr:    ti.IsPtrPtr,
+		Annotations: annots,
+		Func:        fn,
+		Params:      params,
 	}
 }
 
-type Block struct {
+type Func struct {
 	Name       string `json:",omitempty"`
 	ReturnType TypeInfo
 	Args       []ArgInfo
 }
 
-func BlockFromAst(fn *declparser.FunctionDecl) *Block {
+func FuncFromAst(fn *declparse.FunctionDecl) *Func {
 	var args []ArgInfo
 	for _, arg := range fn.Args {
 		args = append(args, ArgInfoFromAst(arg))
 	}
-	return &Block{
+	return &Func{
 		Name:       fn.Name,
 		ReturnType: TypeInfoFromAst(fn.ReturnType),
 		Args:       args,
@@ -94,7 +90,7 @@ type ArgInfo struct {
 	Type TypeInfo
 }
 
-func ArgInfoFromAst(ai declparser.ArgInfo) ArgInfo {
+func ArgInfoFromAst(ai declparse.ArgInfo) ArgInfo {
 	return ArgInfo{
 		Name: ai.Name,
 		Type: TypeInfoFromAst(ai.Type),
@@ -106,37 +102,27 @@ type Property struct {
 	Description string
 	Declaration string
 	Type        TypeInfo
-	Attrs       struct {
-		Class     bool   `json:",omitempty"`
-		Readonly  bool   `json:",omitempty"`
-		Weak      bool   `json:",omitempty"`
-		Nonatomic bool   `json:",omitempty"`
-		Copy      bool   `json:",omitempty"`
-		Nullable  bool   `json:",omitempty"`
-		Nonnull   bool   `json:",omitempty"`
-		Retain    bool   `json:",omitempty"`
-		Getter    string `json:",omitempty"`
-		Setter    string `json:",omitempty"`
-	}
-	Deprecated bool `json:",omitempty"`
-	URL        string
+	Attrs       map[string]interface{}
+	Deprecated  bool `json:",omitempty"`
+	URL         string
 }
 
-func PropertyFromAst(p declparser.PropertyDecl) Property {
+func PropertyFromAst(p declparse.PropertyDecl) Property {
 	prop := Property{
 		Name: p.Name,
 		Type: TypeInfoFromAst(p.Type),
 	}
-	prop.Attrs.Class = p.Class
-	prop.Attrs.Copy = p.Copy
-	prop.Attrs.Getter = p.Getter
-	prop.Attrs.Nonatomic = p.Nonatomic
-	prop.Attrs.Nonnull = p.Nonnull
-	prop.Attrs.Nullable = p.Nullable
-	prop.Attrs.Readonly = p.Readonly
-	prop.Attrs.Setter = p.Setter
-	prop.Attrs.Weak = p.Weak
-	prop.Attrs.Retain = p.Retain
+	attrs := make(map[string]interface{})
+	for attr, val := range p.Attrs {
+		var v interface{}
+		if val == "" {
+			v = true
+		} else {
+			v = val
+		}
+		attrs[attr.String()] = v
+	}
+	prop.Attrs = attrs
 	return prop
 }
 
@@ -150,7 +136,7 @@ type Method struct {
 	URL         string
 }
 
-func MethodFromAst(m declparser.MethodDecl) Method {
+func MethodFromAst(m declparse.MethodDecl) Method {
 	var args []ArgInfo
 	for _, arg := range m.Args {
 		args = append(args, ArgInfoFromAst(arg))
@@ -267,7 +253,7 @@ func Parse(path string) {
 			}
 		}
 		if t.Declaration != "" {
-			p := declparser.NewStringParser(t.Declaration)
+			p := declparse.NewStringParser(t.Declaration)
 			ast, err := p.Parse()
 			if err != nil {
 				if strings.Contains(err.Error(), "typedef") ||

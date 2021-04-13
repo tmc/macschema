@@ -432,7 +432,7 @@
         "Name": "NSInteger"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1531308-numberofcomponents?language=objc"
     },
@@ -444,7 +444,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1532504-alphacomponent?language=objc"
     },
@@ -456,7 +456,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1534051-whitecomponent?language=objc"
     },
@@ -468,7 +468,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1530483-redcomponent?language=objc"
     },
@@ -480,7 +480,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1525935-greencomponent?language=objc"
     },
@@ -492,7 +492,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1534229-bluecomponent?language=objc"
     },
@@ -504,7 +504,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1528234-cyancomponent?language=objc"
     },
@@ -516,7 +516,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1535560-magentacomponent?language=objc"
     },
@@ -528,7 +528,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1531965-yellowcomponent?language=objc"
     },
@@ -540,7 +540,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1526883-blackcomponent?language=objc"
     },
@@ -552,7 +552,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1531780-huecomponent?language=objc"
     },
@@ -564,7 +564,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1526326-saturationcomponent?language=objc"
     },
@@ -576,7 +576,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1529355-brightnesscomponent?language=objc"
     },
@@ -588,8 +588,8 @@
         "Name": "NSColorListName"
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1535443-catalognamecomponent?language=objc"
     },
@@ -602,8 +602,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1535351-localizedcatalognamecomponent?language=objc"
     },
@@ -615,8 +615,8 @@
         "Name": "NSColorName"
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1528278-colornamecomponent?language=objc"
     },
@@ -629,8 +629,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1527286-localizedcolornamecomponent?language=objc"
     },
@@ -642,7 +642,7 @@
         "Name": "NSColorType"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/2880315-type?language=objc"
     },
@@ -655,7 +655,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1526733-colorspace?language=objc"
     },
@@ -667,8 +668,8 @@
         "Name": "NSColorSpaceName"
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "Deprecated": true,
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1535228-colorspacename?language=objc"
@@ -681,7 +682,7 @@
         "Name": "CGColorRef"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1527738-cgcolor?language=objc"
     }
@@ -716,7 +717,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Class": true
+        "class": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nscolor/1533565-ignoresalpha?language=objc"
     }
