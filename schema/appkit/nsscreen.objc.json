@@ -98,7 +98,7 @@
         "Name": "NSWindowDepth"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsscreen/1388373-depth?language=objc"
     },
@@ -110,7 +110,7 @@
         "Name": "NSRect"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsscreen/1388387-frame?language=objc"
     },
@@ -121,10 +121,12 @@
       "Type": {
         "Name": "NSWindowDepth",
         "IsPtr": true,
-        "IsConst": true
+        "Annotations": [
+          "const"
+        ]
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsscreen/1388391-supportedwindowdepths?language=objc"
     },
@@ -145,8 +147,8 @@
         ]
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsscreen/1388360-devicedescription?language=objc"
     },
@@ -158,7 +160,7 @@
         "Name": "NSRect"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsscreen/1388369-visibleframe?language=objc"
     },
@@ -171,8 +173,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nullable": true
+        "nullable": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsscreen/1388383-colorspace?language=objc"
     },
@@ -184,7 +187,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsscreen/1388385-backingscalefactor?language=objc"
     },
@@ -196,7 +199,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsscreen/3180381-maximumpotentialextendeddynamicr?language=objc"
     },
@@ -208,7 +211,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsscreen/1388362-maximumextendeddynamicrangecolor?language=objc"
     },
@@ -220,7 +223,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsscreen/3180382-maximumreferenceextendeddynamicr?language=objc"
     },
@@ -233,8 +236,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsscreen/3228043-localizedname?language=objc"
     }
@@ -249,9 +252,10 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true,
-        "Nullable": true
+        "class": true,
+        "nullable": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsscreen/1388371-mainscreen?language=objc"
     },
@@ -264,9 +268,10 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true,
-        "Nullable": true
+        "class": true,
+        "nullable": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsscreen/1388374-deepestscreen?language=objc"
     },
@@ -285,9 +290,9 @@
         ]
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true,
-        "Copy": true
+        "class": true,
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsscreen/1388393-screens?language=objc"
     },
@@ -299,8 +304,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true
+        "class": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsscreen/1388365-screenshaveseparatespaces?language=objc"
     }

@@ -239,8 +239,7 @@
         {
           "Name": "handler",
           "Type": {
-            "Block": {
-              "Name": "",
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
@@ -276,8 +275,7 @@
         {
           "Name": "handler",
           "Type": {
-            "Block": {
-              "Name": "",
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
@@ -1437,8 +1435,7 @@
         {
           "Name": "trackingHandler",
           "Type": {
-            "Block": {
-              "Name": "",
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
@@ -2263,7 +2260,7 @@
         ]
       },
       "Attrs": {
-        "Weak": true
+        "weak": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419060-delegate?language=objc"
     },
@@ -2275,7 +2272,9 @@
         "Name": "NSViewController",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419615-contentviewcontroller?language=objc"
     },
     {
@@ -2285,9 +2284,13 @@
       "Type": {
         "Name": "NSView",
         "IsPtr": true,
-        "IsKindOf": true
+        "Annotations": [
+          "__kindof"
+        ]
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419160-contentview?language=objc"
     },
     {
@@ -2298,7 +2301,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419220-workswhenmodal?language=objc"
     },
@@ -2321,7 +2324,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419751-backgroundcolor?language=objc"
     },
@@ -2333,7 +2336,9 @@
         "Name": "NSColorSpace",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419569-colorspace?language=objc"
     },
     {
@@ -2354,8 +2359,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isOnActiveSpace"
+        "getter": "isOnActiveSpace",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419707-onactivespace?language=objc"
     },
@@ -2387,7 +2392,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Getter": "isOpaque"
+        "getter": "isOpaque"
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419086-opaque?language=objc"
     },
@@ -2419,7 +2424,7 @@
         "Name": "NSInteger"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419068-windownumber?language=objc"
     },
@@ -2440,8 +2445,8 @@
         ]
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419741-devicedescription?language=objc"
     },
@@ -2493,7 +2498,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419330-hasdynamicdepthlimit?language=objc"
     },
@@ -2504,10 +2509,12 @@
       "Type": {
         "Name": "NSWindowController",
         "IsPtr": true,
-        "IsKindOf": true
+        "Annotations": [
+          "__kindof"
+        ]
       },
       "Attrs": {
-        "Weak": true
+        "weak": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419092-windowcontroller?language=objc"
     },
@@ -2520,8 +2527,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nullable": true
+        "nullable": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419467-attachedsheet?language=objc"
     },
@@ -2533,8 +2541,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isSheet"
+        "getter": "isSheet",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419364-sheet?language=objc"
     },
@@ -2547,8 +2555,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nullable": true
+        "nullable": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419052-sheetparent?language=objc"
     },
@@ -2563,13 +2572,15 @@
           {
             "Name": "NSWindow",
             "IsPtr": true,
-            "IsKindOf": true
+            "Annotations": [
+              "__kindof"
+            ]
           }
         ]
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419765-sheets?language=objc"
     },
@@ -2581,7 +2592,7 @@
         "Name": "NSRect"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419697-frame?language=objc"
     },
@@ -2623,8 +2634,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isZoomed"
+        "getter": "isZoomed",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419398-zoomed?language=objc"
     },
@@ -2636,7 +2647,7 @@
         "Name": "NSEventModifierFlags"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419302-resizeflags?language=objc"
     },
@@ -2668,7 +2679,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419378-inliveresize?language=objc"
     },
@@ -2720,7 +2731,7 @@
         "Name": "id"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419094-contentlayoutguide?language=objc"
     },
@@ -2732,7 +2743,7 @@
         "Name": "NSRect"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419124-contentlayoutrect?language=objc"
     },
@@ -2774,8 +2785,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isVisible"
+        "getter": "isVisible",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419132-visible?language=objc"
     },
@@ -2787,7 +2798,7 @@
         "Name": "NSWindowOcclusionState"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419321-occlusionstate?language=objc"
     },
@@ -2799,8 +2810,8 @@
         "Name": "NSWindowFrameAutosaveName"
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419362-frameautosavename?language=objc"
     },
@@ -2812,8 +2823,8 @@
         "Name": "NSWindowPersistableFrameDescriptor"
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419515-stringwithsavedframe?language=objc"
     },
@@ -2825,8 +2836,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isKeyWindow"
+        "getter": "isKeyWindow",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419735-keywindow?language=objc"
     },
@@ -2838,7 +2849,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419543-canbecomekeywindow?language=objc"
     },
@@ -2850,8 +2861,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isMainWindow"
+        "getter": "isMainWindow",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419130-mainwindow?language=objc"
     },
@@ -2863,7 +2874,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419162-canbecomemainwindow?language=objc"
     },
@@ -2875,7 +2886,9 @@
         "Name": "NSToolbar",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419731-toolbar?language=objc"
     },
     {
@@ -2889,14 +2902,16 @@
           {
             "Name": "NSWindow",
             "IsPtr": true,
-            "IsKindOf": true
+            "Annotations": [
+              "__kindof"
+            ]
           }
         ]
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419236-childwindows?language=objc"
     },
@@ -2909,7 +2924,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Weak": true
+        "weak": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419695-parentwindow?language=objc"
     },
@@ -2922,7 +2937,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Retain": true
+        "retain": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419328-defaultbuttoncell?language=objc"
     },
@@ -2934,7 +2949,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Getter": "isExcludedFromWindowsMenu"
+        "getter": "isExcludedFromWindowsMenu"
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419175-excludedfromwindowsmenu?language=objc"
     },
@@ -2946,7 +2961,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419668-arecursorrectsenabled?language=objc"
     },
@@ -3001,12 +3016,14 @@
           {
             "Name": "NSTitlebarAccessoryViewController",
             "IsPtr": true,
-            "IsKindOf": true
+            "Annotations": [
+              "__kindof"
+            ]
           }
         ]
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419547-titlebaraccessoryviewcontrollers?language=objc"
     },
@@ -3019,7 +3036,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/2870102-tab?language=objc"
     },
@@ -3031,7 +3049,7 @@
         "Name": "NSWindowTabbingIdentifier"
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1644704-tabbingidentifier?language=objc"
     },
@@ -3060,9 +3078,9 @@
         ]
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1792044-tabbedwindows?language=objc"
     },
@@ -3075,8 +3093,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Weak": true
+        "readonly": true,
+        "weak": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/2879189-tabgroup?language=objc"
     },
@@ -3099,8 +3117,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nullable": true
+        "nullable": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419298-currentevent?language=objc"
     },
@@ -3113,7 +3132,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Weak": true
+        "weak": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419479-initialfirstresponder?language=objc"
     },
@@ -3126,8 +3145,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Weak": true
+        "readonly": true,
+        "weak": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419440-firstresponder?language=objc"
     },
@@ -3139,7 +3158,7 @@
         "Name": "NSSelectionDirection"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419158-keyviewselectiondirection?language=objc"
     },
@@ -3181,7 +3200,7 @@
         "Name": "NSPoint"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419280-mouselocationoutsideofeventstrea?language=objc"
     },
@@ -3193,7 +3212,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Getter": "isRestorable"
+        "getter": "isRestorable"
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1526255-restorable?language=objc"
     },
@@ -3209,7 +3228,9 @@
           }
         ]
       },
-      "Attrs": {},
+      "Attrs": {
+        "assign": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1526241-restorationclass?language=objc"
     },
     {
@@ -3250,7 +3271,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Getter": "isDocumentEdited"
+        "getter": "isDocumentEdited"
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419311-documentedited?language=objc"
     },
@@ -3262,7 +3283,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419459-backingscalefactor?language=objc"
     },
@@ -3275,7 +3296,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419404-title?language=objc"
     },
@@ -3288,7 +3309,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/3608198-subtitle?language=objc"
     },
@@ -3311,7 +3332,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419631-representedfilename?language=objc"
     },
@@ -3324,7 +3345,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419066-representedurl?language=objc"
     },
@@ -3337,8 +3358,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nullable": true
+        "nullable": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419232-screen?language=objc"
     },
@@ -3351,8 +3373,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nullable": true
+        "nullable": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419080-deepestscreen?language=objc"
     },
@@ -3374,7 +3397,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Getter": "isMovableByWindowBackground"
+        "getter": "isMovableByWindowBackground"
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419072-movablebywindowbackground?language=objc"
     },
@@ -3386,7 +3409,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Getter": "isMovable"
+        "getter": "isMovable"
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419579-movable?language=objc"
     },
@@ -3398,7 +3421,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Getter": "isReleasedWhenClosed"
+        "getter": "isReleasedWhenClosed"
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419062-releasedwhenclosed?language=objc"
     },
@@ -3410,8 +3433,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isMiniaturized"
+        "getter": "isMiniaturized",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419699-miniaturized?language=objc"
     },
@@ -3423,7 +3446,9 @@
         "Name": "NSImage",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419185-miniwindowimage?language=objc"
     },
     {
@@ -3435,7 +3460,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419571-miniwindowtitle?language=objc"
     },
@@ -3448,7 +3473,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419088-docktile?language=objc"
     },
@@ -3461,7 +3487,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419485-windowref?language=objc"
     },
@@ -3473,7 +3499,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1449574-hasclosebox?language=objc"
     },
@@ -3485,7 +3511,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1449568-hastitlebar?language=objc"
     },
@@ -3513,7 +3539,7 @@
         ]
       },
       "Attrs": {
-        "Weak": true
+        "weak": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/2998855-appearancesource?language=objc"
     },
@@ -3525,8 +3551,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isFloatingPanel"
+        "getter": "isFloatingPanel",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1449579-floatingpanel?language=objc"
     },
@@ -3538,8 +3564,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isMiniaturizable"
+        "getter": "isMiniaturizable",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1449583-miniaturizable?language=objc"
     },
@@ -3551,8 +3577,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isModalPanel"
+        "getter": "isModalPanel",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1449576-modalpanel?language=objc"
     },
@@ -3564,8 +3590,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isResizable"
+        "getter": "isResizable",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1449572-resizable?language=objc"
     },
@@ -3587,7 +3613,7 @@
         "Name": "NSUserInterfaceLayoutDirection"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1644535-windowtitlebarlayoutdirection?language=objc"
     },
@@ -3599,8 +3625,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isZoomable"
+        "getter": "isZoomable",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1449587-zoomable?language=objc"
     }
@@ -3792,8 +3818,8 @@
         "Name": "NSWindowDepth"
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true
+        "class": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1419049-defaultdepthlimit?language=objc"
     },
@@ -3805,7 +3831,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Class": true
+        "class": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1646657-allowsautomaticwindowtabbing?language=objc"
     },
@@ -3817,8 +3843,8 @@
         "Name": "NSWindowUserTabbingPreference"
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true
+        "class": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nswindow/1646658-usertabbingpreference?language=objc"
     }

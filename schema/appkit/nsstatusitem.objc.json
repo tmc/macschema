@@ -75,8 +75,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Weak": true
+        "readonly": true,
+        "weak": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusitem/1525951-statusbar?language=objc"
     },
@@ -87,7 +87,9 @@
       "Type": {
         "Name": "NSStatusItemBehavior"
       },
-      "Attrs": {},
+      "Attrs": {
+        "assign": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusitem/1644024-behavior?language=objc"
     },
     {
@@ -99,8 +101,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nullable": true
+        "nullable": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusitem/1535056-button?language=objc"
     },
@@ -112,7 +115,9 @@
         "Name": "NSMenu",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusitem/1535918-menu?language=objc"
     },
     {
@@ -123,7 +128,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Getter": "isVisible"
+        "assign": true,
+        "getter": "isVisible"
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusitem/1644025-visible?language=objc"
     },
@@ -145,7 +151,7 @@
         "Name": "NSStatusItemAutosaveName"
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusitem/1644022-autosavename?language=objc"
     },
@@ -157,7 +163,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Getter": "isEnabled"
+        "getter": "isEnabled"
       },
       "Deprecated": true,
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusitem/1527352-enabled?language=objc"
@@ -170,7 +176,7 @@
         "Name": "id"
       },
       "Attrs": {
-        "Weak": true
+        "weak": true
       },
       "Deprecated": true,
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusitem/1532686-target?language=objc"
@@ -206,7 +212,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "Deprecated": true,
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusitem/1534494-title?language=objc"
@@ -220,7 +226,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "Deprecated": true,
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusitem/1534223-attributedtitle?language=objc"
@@ -233,7 +239,9 @@
         "Name": "NSImage",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "Deprecated": true,
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusitem/1524711-image?language=objc"
     },
@@ -245,7 +253,9 @@
         "Name": "NSImage",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "Deprecated": true,
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusitem/1534014-alternateimage?language=objc"
     },
@@ -269,7 +279,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "Deprecated": true,
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusitem/1534916-tooltip?language=objc"
@@ -282,7 +292,9 @@
         "Name": "NSView",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "Deprecated": true,
       "URL": "https://developer.apple.com/documentation/appkit/nsstatusitem/1531522-view?language=objc"
     }

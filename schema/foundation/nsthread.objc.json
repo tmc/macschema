@@ -83,14 +83,12 @@
         {
           "Name": "block",
           "Type": {
-            "Block": {
-              "Name": "",
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
               "Args": [
                 {
-                  "Name": "",
                   "Type": {
                     "Name": "void"
                   }
@@ -112,8 +110,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isExecuting"
+        "getter": "isExecuting",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsthread/1411240-executing?language=objc"
     },
@@ -125,8 +123,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isFinished"
+        "getter": "isFinished",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsthread/1409297-finished?language=objc"
     },
@@ -138,8 +136,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isCancelled"
+        "getter": "isCancelled",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsthread/1417366-cancelled?language=objc"
     },
@@ -151,7 +149,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsthread/1408455-ismainthread?language=objc"
     },
@@ -164,8 +162,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Retain": true
+        "readonly": true,
+        "retain": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsthread/1411433-threaddictionary?language=objc"
     },
@@ -178,7 +176,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsthread/1414122-name?language=objc"
     },
@@ -336,14 +334,12 @@
         {
           "Name": "block",
           "Type": {
-            "Block": {
-              "Name": "",
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
               "Args": [
                 {
-                  "Name": "",
                   "Type": {
                     "Name": "void"
                   }
@@ -365,8 +361,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true
+        "class": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsthread/1412704-ismainthread?language=objc"
     },
@@ -379,8 +375,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true
+        "class": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsthread/1414782-mainthread?language=objc"
     },
@@ -393,8 +390,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true
+        "class": true,
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsthread/1410679-currentthread?language=objc"
     },
@@ -413,9 +411,9 @@
         ]
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true,
-        "Copy": true
+        "class": true,
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsthread/1409565-callstackreturnaddresses?language=objc"
     },
@@ -434,9 +432,9 @@
         ]
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true,
-        "Copy": true
+        "class": true,
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsthread/1414836-callstacksymbols?language=objc"
     }

@@ -122,7 +122,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Getter": "isEnabled"
+        "getter": "isEnabled"
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514863-enabled?language=objc"
     },
@@ -134,7 +134,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Getter": "isHidden"
+        "getter": "isHidden"
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514846-hidden?language=objc"
     },
@@ -146,8 +146,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isHiddenOrHasHiddenAncestor"
+        "getter": "isHiddenOrHasHiddenAncestor",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514832-hiddenorhashiddenancestor?language=objc"
     },
@@ -159,7 +159,7 @@
         "Name": "id"
       },
       "Attrs": {
-        "Weak": true
+        "weak": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514843-target?language=objc"
     },
@@ -182,7 +182,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514805-title?language=objc"
     },
@@ -195,7 +195,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514860-attributedtitle?language=objc"
     },
@@ -227,7 +227,9 @@
         "Name": "NSImage",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514819-image?language=objc"
     },
     {
@@ -238,7 +240,9 @@
         "Name": "NSImage",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514861-onstateimage?language=objc"
     },
     {
@@ -249,7 +253,9 @@
         "Name": "NSImage",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514821-offstateimage?language=objc"
     },
     {
@@ -260,7 +266,9 @@
         "Name": "NSImage",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514827-mixedstateimage?language=objc"
     },
     {
@@ -271,7 +279,9 @@
         "Name": "NSMenu",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514845-submenu?language=objc"
     },
     {
@@ -282,7 +292,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514817-hassubmenu?language=objc"
     },
@@ -295,8 +305,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Nullable": true
+        "assign": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514813-parentitem?language=objc"
     },
@@ -308,8 +319,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isSeparatorItem"
+        "getter": "isSeparatorItem",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514837-separatoritem?language=objc"
     },
@@ -321,7 +332,9 @@
         "Name": "NSMenu",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "assign": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514830-menu?language=objc"
     },
     {
@@ -333,7 +346,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514842-keyequivalent?language=objc"
     },
@@ -356,8 +369,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514850-userkeyequivalent?language=objc"
     },
@@ -369,7 +382,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Getter": "isAlternate"
+        "getter": "isAlternate"
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514823-alternate?language=objc"
     },
@@ -392,7 +405,7 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Copy": true
+        "copy": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514848-tooltip?language=objc"
     },
@@ -403,7 +416,9 @@
       "Type": {
         "Name": "id"
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514834-representedobject?language=objc"
     },
     {
@@ -414,7 +429,9 @@
         "Name": "NSView",
         "IsPtr": true
       },
-      "Attrs": {},
+      "Attrs": {
+        "strong": true
+      },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514835-view?language=objc"
     },
     {
@@ -425,8 +442,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isHighlighted"
+        "getter": "isHighlighted",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514856-highlighted?language=objc"
     },
@@ -463,7 +480,7 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Class": true
+        "class": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsmenuitem/1514811-usesuserkeyequivalents?language=objc"
     }

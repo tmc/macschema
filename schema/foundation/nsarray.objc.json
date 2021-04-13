@@ -166,7 +166,9 @@
           "Type": {
             "Name": "ObjectType",
             "IsPtrPtr": true,
-            "IsNonnull": true
+            "Annotations": [
+              "_nonnull"
+            ]
           }
         }
       ],
@@ -186,7 +188,9 @@
           "Type": {
             "Name": "ObjectType",
             "IsPtrPtr": true,
-            "IsNonnull": true
+            "Annotations": [
+              "_nonnull"
+            ]
           }
         },
         {
@@ -379,7 +383,7 @@
         {
           "Name": "predicate",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "BOOL"
               },
@@ -427,7 +431,7 @@
         {
           "Name": "predicate",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "BOOL"
               },
@@ -482,7 +486,7 @@
         {
           "Name": "predicate",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "BOOL"
               },
@@ -525,7 +529,7 @@
         {
           "Name": "predicate",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "BOOL"
               },
@@ -574,7 +578,7 @@
         {
           "Name": "predicate",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "BOOL"
               },
@@ -630,7 +634,7 @@
         {
           "Name": "predicate",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "BOOL"
               },
@@ -747,7 +751,7 @@
         {
           "Name": "block",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
@@ -795,7 +799,7 @@
         {
           "Name": "block",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
@@ -850,7 +854,7 @@
         {
           "Name": "block",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "void"
               },
@@ -1042,7 +1046,31 @@
       "Args": [
         {
           "Name": "comparator",
-          "Type": {}
+          "Type": {
+            "Func": {
+              "ReturnType": {
+                "Name": "NSInteger"
+              },
+              "Args": [
+                {
+                  "Type": {
+                    "Name": "ObjectType"
+                  }
+                },
+                {
+                  "Type": {
+                    "Name": "ObjectType"
+                  }
+                },
+                {
+                  "Type": {
+                    "Name": "void",
+                    "IsPtr": true
+                  }
+                }
+              ]
+            }
+          }
         },
         {
           "Name": "context",
@@ -1070,7 +1098,31 @@
       "Args": [
         {
           "Name": "comparator",
-          "Type": {}
+          "Type": {
+            "Func": {
+              "ReturnType": {
+                "Name": "NSInteger"
+              },
+              "Args": [
+                {
+                  "Type": {
+                    "Name": "ObjectType"
+                  }
+                },
+                {
+                  "Type": {
+                    "Name": "ObjectType"
+                  }
+                },
+                {
+                  "Type": {
+                    "Name": "void",
+                    "IsPtr": true
+                  }
+                }
+              ]
+            }
+          }
         },
         {
           "Name": "context",
@@ -1728,7 +1780,7 @@
         {
           "Name": "block",
           "Type": {
-            "Block": {
+            "Func": {
               "ReturnType": {
                 "Name": "BOOL"
               },
@@ -1797,7 +1849,9 @@
             "Name": "NSError",
             "IsPtr": true,
             "IsPtrPtr": true,
-            "IsNullable": true
+            "Annotations": [
+              "_nullable"
+            ]
           }
         }
       ],
@@ -1824,7 +1878,9 @@
             "Name": "NSError",
             "IsPtr": true,
             "IsPtrPtr": true,
-            "IsNullable": true
+            "Annotations": [
+              "_nullable"
+            ]
           }
         }
       ],
@@ -1869,7 +1925,7 @@
         "Name": "NSUInteger"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsarray/1409982-count?language=objc"
     },
@@ -1881,9 +1937,9 @@
         "Name": "ObjectType"
       },
       "Attrs": {
-        "Readonly": true,
-        "Nonatomic": true,
-        "Nullable": true
+        "nonatomic": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsarray/1412852-firstobject?language=objc"
     },
@@ -1895,9 +1951,9 @@
         "Name": "ObjectType"
       },
       "Attrs": {
-        "Readonly": true,
-        "Nonatomic": true,
-        "Nullable": true
+        "nonatomic": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsarray/1408316-lastobject?language=objc"
     },
@@ -1910,8 +1966,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsarray/1413063-sortedarrayhint?language=objc"
     },
@@ -1924,8 +1980,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/foundation/nsarray/1413042-description?language=objc"
     }
@@ -2079,7 +2135,9 @@
             "Name": "NSError",
             "IsPtr": true,
             "IsPtrPtr": true,
-            "IsNullable": true
+            "Annotations": [
+              "_nullable"
+            ]
           }
         }
       ],

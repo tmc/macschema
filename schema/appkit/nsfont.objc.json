@@ -59,7 +59,7 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsfont/1524511-pointsize?language=objc"
     },
@@ -72,7 +72,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsfont/1535912-coveredcharacterset?language=objc"
     },
@@ -85,7 +86,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true,
+        "strong": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsfont/1530476-fontdescriptor?language=objc"
     },
@@ -97,8 +99,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isFixedPitch"
+        "getter": "isFixedPitch",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsfont/1529210-fixedpitch?language=objc"
     },
@@ -110,7 +112,7 @@
         "Name": "NSStringEncoding"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsfont/1527635-mostcompatiblestringencoding?language=objc"
     },
@@ -122,7 +124,7 @@
         "Name": "NSUInteger"
       },
       "Attrs": {
-        "Readonly": true
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsfont/1533968-numberofglyphs?language=objc"
     },
@@ -135,9 +137,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsfont/1531660-displayname?language=objc"
     },
@@ -150,9 +152,9 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true,
-        "Nullable": true
+        "copy": true,
+        "nullable": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsfont/1529585-familyname?language=objc"
     },
@@ -165,8 +167,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsfont/1526183-fontname?language=objc"
     },
@@ -178,8 +180,8 @@
         "Name": "BOOL"
       },
       "Attrs": {
-        "Readonly": true,
-        "Getter": "isVertical"
+        "getter": "isVertical",
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsfont/1534644-vertical?language=objc"
     },
@@ -192,8 +194,8 @@
         "IsPtr": true
       },
       "Attrs": {
-        "Readonly": true,
-        "Copy": true
+        "copy": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsfont/1535152-verticalfont?language=objc"
     }
@@ -296,7 +298,9 @@
           "Type": {
             "Name": "CGFloat",
             "IsPtr": true,
-            "IsConst": true
+            "Annotations": [
+              "const"
+            ]
           }
         }
       ],
@@ -686,8 +690,8 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true
+        "class": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsfont/1531931-systemfontsize?language=objc"
     },
@@ -699,8 +703,8 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true
+        "class": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsfont/1535612-smallsystemfontsize?language=objc"
     },
@@ -712,8 +716,8 @@
         "Name": "CGFloat"
       },
       "Attrs": {
-        "Class": true,
-        "Readonly": true
+        "class": true,
+        "readonly": true
       },
       "URL": "https://developer.apple.com/documentation/appkit/nsfont/1534629-labelfontsize?language=objc"
     }

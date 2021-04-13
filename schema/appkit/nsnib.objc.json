@@ -91,7 +91,9 @@
             "Name": "NSArray",
             "IsPtr": true,
             "IsPtrPtr": true,
-            "IsNullUnspecified": true
+            "Annotations": [
+              "_null_unspecified"
+            ]
           }
         }
       ],
@@ -137,7 +139,9 @@
             "Name": "NSArray",
             "IsPtr": true,
             "IsPtrPtr": true,
-            "IsNullable": true
+            "Annotations": [
+              "_nullable"
+            ]
           }
         }
       ],
