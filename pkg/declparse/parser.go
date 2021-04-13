@@ -81,11 +81,11 @@ func (p *Parser) expectIdent() (string, error) {
 	return lit, nil
 }
 
-func (p *Parser) expectLiteral(s string) (string, error) {
+func (p *Parser) expectDots(s string) (string, error) {
 	lit := ""
 	for i := 0; i < len(s); i++ {
-		_, _, l := p.tb.Scan()
-		lit += l
+		t, _, _ := p.tb.Scan()
+		lit += t.String()
 		if len(lit) == len(s) {
 			break
 		}

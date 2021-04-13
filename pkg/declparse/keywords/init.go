@@ -21,7 +21,6 @@ const (
 )
 
 var tokenMap = map[lexer.Token]string{
-
 	PROPERTY:  "@property",
 	INTERFACE: "@interface",
 	PROTOCOL:  "@protocol",

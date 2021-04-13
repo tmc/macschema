@@ -61,6 +61,9 @@ func (p *Parser) expectType(parens bool) (ti *TypeInfo, err error) {
 
 	if tok, _, _ := p.tb.Scan(); tok == lexer.MUL {
 		ti.IsPtr = true
+	} else if tok == lexer.POW {
+		ti.IsPtr = true
+		ti.IsPtrPtr = true
 	} else {
 		p.tb.Unscan()
 	}

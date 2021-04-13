@@ -1,30 +1,56 @@
 package declparse
 
 import (
+	"log"
 	"reflect"
 	"strings"
 	"testing"
+
+	"github.com/go-test/deep"
 )
 
 func TestParser(t *testing.T) {
+	deep.NilMapsAreEmpty = true
+
 	for _, tt := range tests {
 		t.Run(tt.s, func(t *testing.T) {
-			input := strings.TrimRight(tt.s, ";")
-			p := NewStringParser(input + ";")
+			p := NewStringParser(normalizeStmntString(tt.s))
 			got, err := p.Parse()
 			if err != nil {
-				t.Fatal(err)
+				t.Fatal("parse:", err)
 			}
-			if !reflect.DeepEqual(got, tt.n) {
-				t.Errorf("Parse()\n  got: %s\n want: %s", got, tt.n)
+			if diff := deep.Equal(got, normalizeStmntNode(tt.n)); diff != nil {
+				t.Error("diff:", diff)
 			}
 		})
 	}
-	// str := "- (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)style backing:(NSBackingStoreType)backingStoreType defer:(BOOL)flag;"
-	// p := NewStringParser(str)
-	// stmt, err := p.Parse()
-	// if err != nil {
-	// 	t.Fatal(err)
-	// }
-	// fmt.Println(stmt)
+}
+
+// easier to make everything a statement
+
+func normalizeStmntString(s string) string {
+	return strings.TrimRight(s, ";") + ";"
+}
+
+func normalizeStmntNode(n Node) *Statement {
+	stmt := &Statement{}
+	switch v := n.(type) {
+	case *Statement:
+		return v
+	case *InterfaceDecl:
+		stmt.Interface = v
+	case *PropertyDecl:
+		stmt.Property = v
+	case *MethodDecl:
+		stmt.Method = v
+	case *VariableDecl:
+		stmt.Variable = v
+	case *ProtocolDecl:
+		stmt.Protocol = v
+	case *FunctionDecl:
+		stmt.Function = v
+	default:
+		log.Fatal("bad node type:", reflect.TypeOf(n))
+	}
+	return stmt
 }

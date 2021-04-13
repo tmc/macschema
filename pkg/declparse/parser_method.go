@@ -48,7 +48,7 @@ func parseMethod(p *Parser) (next stateFn, node Node, err error) {
 			decl.Args = append(decl.Args, arg)
 
 			if tok, _, _ = p.tb.Scan(); tok == lexer.COMMA {
-				if _, err := p.expectLiteral("..."); err != nil {
+				if _, err := p.expectDots("..."); err != nil {
 					return nil, nil, err
 				}
 				decl.Args = append(decl.Args, ArgInfo{
