@@ -6,8 +6,8 @@ import (
 	"os"
 	"strconv"
 
-	_ "github.com/progrium/macschema/pkg/declparse/keywords"
-	"github.com/progrium/macschema/pkg/lexer"
+	_ "github.com/progrium/macschema/declparse/keywords"
+	"github.com/progrium/macschema/lexer"
 )
 
 var skipWhitespace = flag.Bool("w", false, "skip whitespace tokens")
