@@ -6,7 +6,7 @@ checksum:
 snapshot:
   name_template: "SNAPSHOT-{{.ShortCommit}}"
 builds:
-  - id: default
+  - id: macschema
     goos:
       - darwin
     goarch:
@@ -17,7 +17,7 @@ builds:
 archives:
 - id: default
   builds:
-  - default
+  - macschema
   name_template: '{{ .ProjectName }}_{{ .Version }}'
   format: zip
   files:
