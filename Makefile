@@ -2,14 +2,14 @@
 build: local/bin/macschema
 
 clean:
-	rm local/bin/macschema
+	rm -fr dist
+	rm -f local/bin/macschema
 
-ldflags="-X $(module)/cmd.Version=$(version:dev=$(branch))"
 local/bin/macschema: */*.go
 	go build -ldflags $(ldflags) -o ./local/bin/macschema .
 
 
 version=$(shell cat version)
-_module=$(shell head -1 go.mod)
-module=$(_module:module=)
+module=$(shell go list -m)
 branch=$(shell git branch --show-current)
+ldflags="-X $(module)/cmd.Version=$(version:dev=$(branch))"
