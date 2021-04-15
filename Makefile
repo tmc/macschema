@@ -5,6 +5,11 @@ clean:
 	rm -fr dist
 	rm -f local/bin/macschema
 
+release:
+	git tag v0.1.0
+	git push origin v0.1.0
+	goreleaser release --rm-dist
+
 local/bin/macschema: */*.go
 	go build -ldflags $(ldflags) -o ./local/bin/macschema .
 
