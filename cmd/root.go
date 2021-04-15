@@ -8,11 +8,13 @@ import (
 )
 
 var (
+	Version string
+
 	flagShow bool
 	flagLang string
 
 	rootCmd = &cobra.Command{
-		Version: "0.1.0",
+		Version: Version,
 		Use:     "macschema",
 		Short:   "Generates JSON definitions for Apple APIs",
 	}
