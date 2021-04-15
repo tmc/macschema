@@ -32,7 +32,11 @@ func PullSchema(l Lookup) Schema {
 	for _, topic := range t.Topics {
 		t, err := ReadTopic(LookupFromPath(topic.Path))
 		fatal(err)
-		if t.Type == "Function" || t.Type == "Enumeration" || t.Type == "Global Variable" || t.Type == "Enumeration Case" {
+		if t.Type == "Function" ||
+			t.Type == "Enumeration" ||
+			t.Type == "Global Variable" ||
+			t.Type == "Enumeration Case" ||
+			t.Type == "Macro" {
 			continue
 		}
 		var isDeprecated bool
