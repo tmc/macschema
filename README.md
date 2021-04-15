@@ -1,7 +1,6 @@
 # macschema
 
 [![GoDoc](https://godoc.org/github.com/progrium/macschema?status.svg)](https://godoc.org/github.com/progrium/macschema)
-<!--a href="https://github.com/progrium/macschema/actions?workflow=test"><img alt="Test workflow" src="https://img.shields.io/github/workflow/status/progrium/macschema/Test?label=test&logo=github&style=flat-square"></a-->
 [![Go Report Card](https://goreportcard.com/badge/github.com/progrium/macschema)](https://goreportcard.com/report/github.com/progrium/macschema)
 <a href="https://twitter.com/progriumHQ" title="@progriumHQ on Twitter"><img src="https://img.shields.io/badge/twitter-@progriumHQ-55acee.svg" alt="@progriumHQ on Twitter"></a>
 <a href="https://github.com/progrium/macschema/discussions" title="Project Forum"><img src="https://img.shields.io/badge/community-forum-ff69b4.svg" alt="Project Forum"></a>
@@ -10,52 +9,13 @@
 ------
 Toolchain for generating JSON definitions for Apple APIs like this:
 
-```json
-{
-  "Class": {
-    "Name": "NSScreen",
-    "Description": "An object that describes the attributes of a computer’s monitor or screen.",
-    "Declaration": "@interface NSScreen : NSObject",
-    "InstanceMethods": [
-      {
-        "Name": "convertRectFromBacking:",
-        "Description": "Converts the rectangle from the device pixel aligned coordinates system of a screen.",
-        "Declaration": "- (NSRect)convertRectFromBacking:(NSRect)rect;",
-        "Return": {
-          "Name": "NSRect"
-        },
-        "Args": [
-          {
-            "Name": "rect",
-            "Type": {
-              "Name": "NSRect"
-            }
-          }
-        ],
-        "TopicURL": "https://developer.apple.com/documentation/appkit/nsscreen/1388364-convertrectfrombacking?language=objc"
-      },
-      ...
-    ],
-    "InstanceProperties": [ ... ],
-    "TypeProperties": [ ... ],
-    "Frameworks": [
-      "AppKit"
-    ],
-    "Platforms": [
-      "macOS 10.0+"
-    ],
-    "TopicURL": "https://developer.apple.com/documentation/appkit/nsscreen?language=objc",
-  },
-  "Kind": "class",
-  "PullDate": "2021-04-14T18:22:57.729056-05:00",
-  "Version": 2
-}
-```
+<img src="https://github.com/progrium/macschema/raw/main/macschema.png" alt="macschema example">
 
-## Installing macschema
+## Getting macschema
 
+You can download from releases or use Homebrew:
 ```
-$ go get github.com/progrium/macschema
+$ brew install progrium/taps/macschema
 ```
 
 Chrome is required for downloading topic data. You can also use headless Chrome in Docker. We recommend [chromedp/headless-shell](https://github.com/chromedp/docker-headless-shell).
