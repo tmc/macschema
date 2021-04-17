@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -26,7 +27,8 @@ var fetchCmd = &cobra.Command{
 			return
 		}
 
-		t := schema.FetchTopic(l)
+		ctx := context.Background()
+		t := schema.FetchTopic(ctx, l)
 		fatal(writeTopic(l, t))
 		fmt.Fprintf(os.Stderr, "=> %s [%s]\n", l.DocPath, time.Since(t.LastFetch))
 	},

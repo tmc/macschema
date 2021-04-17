@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"time"
@@ -15,8 +16,9 @@ var crawlCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		l := schema.NewLookup(args[0], flagLang)
+		ctx := context.Background()
 		if !l.DocExists() {
-			schema.FetchTopic(l)
+			schema.FetchTopic(ctx, l)
 		}
 		t, err := schema.ReadTopic(l)
 		fatal(err)
@@ -28,7 +30,7 @@ var crawlCmd = &cobra.Command{
 				// TODO: check last fetch, version
 				continue
 			}
-			tt := schema.FetchTopic(ll)
+			tt := schema.FetchTopic(ctx, ll)
 			fatal(writeTopic(ll, tt))
 			fmt.Fprintf(os.Stderr, "   %s [%s]\n", ll.DocPath, time.Since(tt.LastFetch))
 		}

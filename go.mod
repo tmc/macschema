@@ -7,4 +7,5 @@ require (
 	github.com/chromedp/chromedp v0.6.10
 	github.com/go-test/deep v1.0.7
 	github.com/spf13/cobra v1.1.3
+	golang.org/x/sync v0.0.0-20190423024810-112230192c58
 )

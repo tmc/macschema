@@ -10,10 +10,10 @@ import (
 	"github.com/chromedp/chromedp"
 )
 
-func FetchTopic(l Lookup) Topic {
+func FetchTopic(ctx context.Context, l Lookup) Topic {
 	u, _ := url.Parse(l.URL)
 
-	ctx, cancel := chromedp.NewContext(context.Background())
+	ctx, cancel := chromedp.NewContext(ctx)
 	defer cancel()
 	ctx, cancel = context.WithTimeout(ctx, 20*time.Second)
 	defer cancel()
