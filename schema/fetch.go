@@ -27,7 +27,7 @@ func FetchTopic(ctx context.Context, l Lookup) Topic {
 		chromedp.Navigate(u.String()),
 		chromedp.WaitVisible(`main div.topictitle`),
 	)
-	dur := time.Duration(5 * time.Second)
+	dur := time.Duration(1 * time.Second)
 	short, _ := context.WithTimeout(ctx, dur)
 	go chromedp.Run(short, chromedp.Text(`main div.topictitle h1.title`, &t.Title))
 	short, _ = context.WithTimeout(ctx, dur)
