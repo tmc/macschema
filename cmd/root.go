@@ -13,6 +13,8 @@ var (
 	flagShow bool
 	flagLang string
 
+	flagPullConcurrency int
+
 	rootCmd = &cobra.Command{
 		Version: Version,
 		Use:     "macschema",
@@ -24,6 +26,8 @@ func init() {
 	rootCmd.AddCommand(crawlCmd)
 	rootCmd.AddCommand(fetchCmd)
 	rootCmd.AddCommand(pullCmd)
+
+	pullCmd.Flags().IntVar(&flagPullConcurrency, "concurrency", 1, "number of concurrent workers")
 
 	rootCmd.PersistentFlags().BoolVar(&flagShow, "show", false, "show resulting JSON to stdout")
 	rootCmd.PersistentFlags().StringVar(&flagLang, "lang", "objc", "use language")

@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -10,6 +11,7 @@ import (
 
 	"github.com/progrium/macschema/schema"
 	"github.com/spf13/cobra"
+	"golang.org/x/sync/semaphore"
 )
 
 var pullCmd = &cobra.Command{
@@ -18,26 +20,36 @@ var pullCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		start := time.Now()
+		ctx, cancel := schema.WithBrowserContext(context.Background())
+		defer cancel()
 		l := schema.NewLookup(args[0], flagLang)
 		if !l.DocExists() {
 			fmt.Fprintln(os.Stderr, "=> Fetching topic...")
-			t := schema.FetchTopic(l)
+			t := schema.FetchTopic(ctx, l)
 			fatal(writeTopic(l, t))
 		}
 		t, err := schema.ReadTopic(l)
 		fatal(err)
 
 		fmt.Fprintln(os.Stderr, "=> Fetching sub-topics...")
+		sem := semaphore.NewWeighted(int64(flagPullConcurrency))
+
 		for _, link := range t.Topics {
 			ll := schema.LookupFromPath(link.Path)
 			if ll.DocExists() {
 				// TODO: check last fetch, version
 				continue
 			}
-			fmt.Fprintln(os.Stderr, "  ", ll.DocPath)
-			tt := schema.FetchTopic(ll)
-			fatal(writeTopic(ll, tt))
+			sem.Acquire(ctx, 1)
+			go func() {
+				defer sem.Release(1)
+				fmt.Fprintln(os.Stderr, "  ", ll.DocPath)
+				tt := schema.FetchTopic(ctx, ll)
+				fatal(writeTopic(ll, tt))
+			}()
 		}
+		fmt.Fprintln(os.Stderr, "=> Waiting for workers to finish...")
+		sem.Acquire(ctx, int64(flagPullConcurrency))
 
 		fmt.Fprintln(os.Stderr, "=> Generating schema...")
 		s := schema.PullSchema(l)
