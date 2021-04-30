@@ -19,6 +19,10 @@ const (
 	Version = 2
 )
 
+func WithBrowserContext(ctx context.Context) (context.Context, context.CancelFunc) {
+	return chromedp.NewContext(ctx)
+}
+
 func LookupFromPath(path string) Lookup {
 	u, err := url.Parse(path)
 	if err != nil {
