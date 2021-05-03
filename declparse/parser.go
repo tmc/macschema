@@ -68,7 +68,7 @@ func (p *Parser) parse(startState stateFn) (n Node, err error) {
 func (p *Parser) expectToken(t lexer.Token) error {
 	tok, pos, lit := p.tb.Scan()
 	if tok != t {
-		return fmt.Errorf("found %q, expected token %s at %v", lit, t, pos)
+		return fmt.Errorf("found %s (%q), expected token %s at %v", tok, lit, t, pos)
 	}
 	return nil
 }

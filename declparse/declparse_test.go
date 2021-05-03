@@ -579,4 +579,35 @@ var tests = []struct {
 			},
 		},
 	},
+
+	{
+		s: `- (BOOL)writeObjects:(NSArray<id<NSPasteboardWriting>> *)objects;`,
+		n: &Statement{
+			Method: &MethodDecl{
+				ReturnType: TypeInfo{
+					Name: "BOOL",
+				},
+				NameParts: []string{"writeObjects"},
+				Args: []ArgInfo{
+					{
+						Name: "objects",
+						Type: TypeInfo{
+							Name:  "NSArray",
+							IsPtr: true,
+							Params: []TypeInfo{
+								{
+									Name: "id",
+									Params: []TypeInfo{
+										{
+											Name: "NSPasteboardWriting",
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	},
 }

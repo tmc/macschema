@@ -17,6 +17,7 @@ type TokenBuffer struct {
 		pos Pos
 		lit string
 	}
+	replace []Token
 }
 
 // NewTokenBuffer returns a new buffered scanner for a reader.
@@ -32,6 +33,11 @@ func (s *TokenBuffer) Scan() (tok Token, pos Pos, lit string) {
 // ScanRegex reads a regex token from the scanner.
 func (s *TokenBuffer) ScanRegex() (tok Token, pos Pos, lit string) {
 	return s.ScanFunc(s.s.ScanRegex)
+}
+
+// OneRuneOperators sets the scanner option to ignore multi rune operators.
+func (s *TokenBuffer) OneRuneOperators(b bool) {
+	s.s.OneRuneOperators = b
 }
 
 // ScanFunc uses the provided function to scan the next token.

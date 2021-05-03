@@ -13,6 +13,7 @@ func (p *Parser) expectType(parens bool) (ti *TypeInfo, err error) {
 		}
 	}
 
+	// type annotations before name
 	for {
 		lit, err := p.expectIdent()
 		if err != nil {
@@ -27,6 +28,7 @@ func (p *Parser) expectType(parens bool) (ti *TypeInfo, err error) {
 		}
 	}
 
+	// type name
 	if ti.Name, err = p.expectIdent(); err != nil {
 		return nil, err
 	}
@@ -38,7 +40,10 @@ func (p *Parser) expectType(parens bool) (ti *TypeInfo, err error) {
 		}
 	}
 
+	// type params
 	if tok, _, _ := p.tb.Scan(); tok == lexer.LT {
+		p.tb.OneRuneOperators(true)
+
 		for {
 			typ, err := p.expectType(false)
 			if err != nil {
@@ -55,10 +60,13 @@ func (p *Parser) expectType(parens bool) (ti *TypeInfo, err error) {
 		if err := p.expectToken(lexer.GT); err != nil {
 			return nil, err
 		}
+
+		p.tb.OneRuneOperators(false)
 	} else {
 		p.tb.Unscan()
 	}
 
+	// pointer
 	if tok, _, _ := p.tb.Scan(); tok == lexer.MUL {
 		ti.IsPtr = true
 	} else if tok == lexer.POW {
@@ -68,6 +76,7 @@ func (p *Parser) expectType(parens bool) (ti *TypeInfo, err error) {
 		p.tb.Unscan()
 	}
 
+	// detect function type
 	if tok, _, _ := p.tb.Scan(); tok == lexer.LPAREN {
 		p.tb.Unscan()
 		ti.Func, err = p.expectFuncType(ti)
@@ -79,6 +88,7 @@ func (p *Parser) expectType(parens bool) (ti *TypeInfo, err error) {
 		p.tb.Unscan()
 	}
 
+	// type annotations after name
 	for {
 		lit, err := p.expectIdent()
 		if err != nil {
@@ -94,6 +104,7 @@ func (p *Parser) expectType(parens bool) (ti *TypeInfo, err error) {
 		}
 	}
 
+	// pointer of pointer
 	if tok, _, _ := p.tb.Scan(); tok == lexer.MUL {
 		ti.IsPtrPtr = true
 	} else {

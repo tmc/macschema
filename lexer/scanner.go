@@ -12,6 +12,8 @@ import (
 
 // Scanner represents a lexical scanner for InfluxQL.
 type Scanner struct {
+	OneRuneOperators bool // only scan one rune operators (+, not ++)
+
 	r *reader
 }
 
@@ -56,21 +58,21 @@ func (s *Scanner) Scan() (tok Token, pos Pos, lit string) {
 		}
 		return DOT, pos, ""
 	case '+':
-		if ch1, _ := s.r.read(); ch1 == '+' {
+		if ch1, _ := s.r.read(); ch1 == '+' && !s.OneRuneOperators {
 			return PLUSPLUS, pos, ""
 		}
 		s.r.unread()
 		return s.scanNumber()
 	case '-':
-		if ch1, _ := s.r.read(); ch1 == '>' {
+		if ch1, _ := s.r.read(); ch1 == '>' && !s.OneRuneOperators {
 			return ARROW, pos, ""
-		} else if ch1 == '-' {
+		} else if ch1 == '-' && !s.OneRuneOperators {
 			return MINUSMINUS, pos, ""
 		}
 		s.r.unread()
 		return s.scanNumber()
 	case '*':
-		if ch1, _ := s.r.read(); ch1 == '*' {
+		if ch1, _ := s.r.read(); ch1 == '*' && !s.OneRuneOperators {
 			return POW, pos, ""
 		}
 		s.r.unread()
@@ -78,36 +80,36 @@ func (s *Scanner) Scan() (tok Token, pos Pos, lit string) {
 	case '/':
 		return DIV, pos, ""
 	case '=':
-		if ch1, _ := s.r.read(); ch1 == '~' {
+		if ch1, _ := s.r.read(); ch1 == '~' && !s.OneRuneOperators {
 			return EQREGEX, pos, ""
-		} else if ch1 == '>' {
+		} else if ch1 == '>' && !s.OneRuneOperators {
 			return EQARROW, pos, ""
-		} else if ch1 == '=' {
+		} else if ch1 == '=' && !s.OneRuneOperators {
 			return EQEQ, pos, ""
 		}
 		s.r.unread()
 		return EQ, pos, ""
 	case '!':
-		if ch1, _ := s.r.read(); ch1 == '=' {
+		if ch1, _ := s.r.read(); ch1 == '=' && !s.OneRuneOperators {
 			return NEQ, pos, ""
-		} else if ch1 == '~' {
+		} else if ch1 == '~' && !s.OneRuneOperators {
 			return NEQREGEX, pos, ""
 		}
 		s.r.unread()
 	case '>':
-		if ch1, _ := s.r.read(); ch1 == '=' {
+		if ch1, _ := s.r.read(); ch1 == '=' && !s.OneRuneOperators {
 			return GTE, pos, ""
-		} else if ch1 == '>' {
+		} else if ch1 == '>' && !s.OneRuneOperators {
 			return RSHIFT, pos, ""
 		}
 		s.r.unread()
 		return GT, pos, ""
 	case '<':
-		if ch1, _ := s.r.read(); ch1 == '=' {
+		if ch1, _ := s.r.read(); ch1 == '=' && !s.OneRuneOperators {
 			return LTE, pos, ""
-		} else if ch1 == '>' {
+		} else if ch1 == '>' && !s.OneRuneOperators {
 			return NEQ, pos, ""
-		} else if ch1 == '<' {
+		} else if ch1 == '<' && !s.OneRuneOperators {
 			return LSHIFT, pos, ""
 		}
 		s.r.unread()
