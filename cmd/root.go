@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"runtime"
 
 	"github.com/spf13/cobra"
 )
@@ -27,7 +28,7 @@ func init() {
 	rootCmd.AddCommand(fetchCmd)
 	rootCmd.AddCommand(pullCmd)
 
-	pullCmd.Flags().IntVar(&flagPullConcurrency, "concurrency", 1, "number of concurrent workers")
+	pullCmd.Flags().IntVar(&flagPullConcurrency, "concurrency", runtime.NumCPU(), "number of concurrent workers")
 
 	rootCmd.PersistentFlags().BoolVar(&flagShow, "show", false, "show resulting JSON to stdout")
 	rootCmd.PersistentFlags().StringVar(&flagLang, "lang", "objc", "use language")
