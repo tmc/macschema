@@ -61,6 +61,14 @@ func FetchTopic(ctx context.Context, l Lookup) Topic {
 		}
 	}
 
+	if t.Type == "" && t.Declaration != "" {
+		if t.Declaration[0] == '-' {
+			t.Type = "Instance Method"
+		} else if t.Declaration[0] == '+' {
+			t.Type = "Type Method"
+		}
+	}
+
 	// topics := "#topics div.contenttable-section div.section-content div.topic a.link"
 	// if os.Getenv("ALLOW_DEPRECATED") == "" {
 	// 	topics = topics + ":not(.deprecated)"
