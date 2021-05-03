@@ -610,4 +610,49 @@ var tests = []struct {
 			},
 		},
 	},
+
+	{
+		s: `+ (id)addLocalMonitorForEventsMatchingMask:(NSEventMask)mask handler:(NSEvent * _Nullable (^)(NSEvent *event))block;`,
+		n: &Statement{
+			Method: &MethodDecl{
+				TypeMethod: true,
+				ReturnType: TypeInfo{
+					Name: "id",
+				},
+				NameParts: []string{"addLocalMonitorForEventsMatchingMask", "handler"},
+				Args: []ArgInfo{
+					{
+						Name: "mask",
+						Type: TypeInfo{
+							Name: "NSEventMask",
+						},
+					},
+					{
+						Name: "block",
+						Type: TypeInfo{
+							Func: &FunctionDecl{
+								IsBlock: true,
+								ReturnType: TypeInfo{
+									Name:  "NSEvent",
+									IsPtr: true,
+									Annots: map[TypeAnnotation]bool{
+										TypeAnnotNullable: true,
+									},
+								},
+								Args: FuncArgs{
+									{
+										Name: "event",
+										Type: TypeInfo{
+											Name:  "NSEvent",
+											IsPtr: true,
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	},
 }
