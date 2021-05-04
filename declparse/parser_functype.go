@@ -7,7 +7,13 @@ import (
 )
 
 func (p *Parser) expectFuncType(returnType *TypeInfo) (fn *FunctionDecl, err error) {
-	fn = &FunctionDecl{ReturnType: *returnType}
+	fn = &FunctionDecl{ReturnType: TypeInfo{
+		Name:     returnType.Name,
+		Annots:   returnType.Annots,
+		IsPtr:    returnType.IsPtr,
+		IsPtrPtr: returnType.IsPtrPtr,
+		Params:   returnType.Params,
+	}}
 
 	var lit string
 	if tok, _, _ := p.tb.Scan(); tok == lexer.LPAREN {

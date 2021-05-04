@@ -16,6 +16,7 @@ type Statement struct {
 	Protocol  *ProtocolDecl
 	Function  *FunctionDecl
 	Variable  *VariableDecl
+	Enum      *EnumDecl
 	// Typedef *TypedefDecl
 }
 
@@ -90,4 +91,9 @@ type VariableDecl struct {
 	Name  string
 	Type  TypeInfo
 	Value string
+}
+
+type EnumDecl struct {
+	Name   string
+	Consts []VariableDecl
 }

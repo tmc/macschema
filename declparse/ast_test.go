@@ -1,16 +1,23 @@
 package declparse
 
 import (
+	"regexp"
 	"testing"
 )
 
 func TestAST_Strings(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.s, func(t *testing.T) {
-			got := tt.n.String()
-			if got != tt.s {
-				t.Errorf("String()\n  got: %s\n want: %s", got, tt.s)
+			got := normalizeWhitespace(tt.n.String())
+			want := normalizeWhitespace(tt.s)
+			if got != want {
+				t.Errorf("String()\n  got: %s\n want: %s", got, want)
 			}
 		})
 	}
+}
+
+func normalizeWhitespace(s string) string {
+	space := regexp.MustCompile(`\s+`)
+	return space.ReplaceAllString(s, " ")
 }

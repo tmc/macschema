@@ -50,6 +50,12 @@ func (p *Parser) Parse() (*Statement, error) {
 			return nil, err
 		}
 		return &Statement{Protocol: decl.(*ProtocolDecl)}, nil
+	case keywords.ENUM:
+		decl, err := p.parse(parseEnum)
+		if err != nil {
+			return nil, err
+		}
+		return &Statement{Enum: decl.(*EnumDecl)}, nil
 	default:
 		// TODO: parseFunction
 		return nil, fmt.Errorf("unable to parse token: %s %s", tok, lit)

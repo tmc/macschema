@@ -17,6 +17,8 @@ const (
 	INTERFACE
 	PROTOCOL
 
+	ENUM
+
 	endKeywords
 )
 
@@ -24,6 +26,7 @@ var tokenMap = map[lexer.Token]string{
 	PROPERTY:  "@property",
 	INTERFACE: "@interface",
 	PROTOCOL:  "@protocol",
+	ENUM:      "enum",
 }
 
 // IsKeyword returns true if the token is a keyword.

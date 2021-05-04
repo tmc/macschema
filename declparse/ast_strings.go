@@ -24,6 +24,9 @@ func (s Statement) String() string {
 	if s.Variable != nil {
 		return s.Variable.String() + ";"
 	}
+	if s.Enum != nil {
+		return s.Enum.String() + ";"
+	}
 	return ""
 }
 
@@ -152,5 +155,28 @@ func (v VariableDecl) String() string {
 	if v.Value != "" {
 		fmt.Fprintf(b, " = %s", v.Value)
 	}
+	return b.String()
+}
+
+func (e EnumDecl) String() string {
+	b := &strings.Builder{}
+	if e.Name != "" {
+		fmt.Fprintf(b, "enum %s { ", e.Name)
+	} else {
+		b.WriteString("enum { ")
+	}
+	for idx, c := range e.Consts {
+		if c.Value != "" {
+			fmt.Fprintf(b, "%s = %s", c.Name, c.Value)
+		} else {
+			fmt.Fprintf(b, "%s", c.Name)
+		}
+		if idx == len(e.Consts)-1 {
+			b.WriteString(" ")
+		} else {
+			b.WriteString(", ")
+		}
+	}
+	b.WriteString("}")
 	return b.String()
 }

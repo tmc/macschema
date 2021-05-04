@@ -612,7 +612,7 @@ var tests = []struct {
 	},
 
 	{
-		s: `+ (id)addLocalMonitorForEventsMatchingMask:(NSEventMask)mask handler:(NSEvent * _Nullable (^)(NSEvent *event))block;`,
+		s: `+ (id)addLocalMonitorForEventsMatchingMask:(NSEventMask)mask handler:(NSEvent * _Nullable (^)(NSEvent * event))block;`,
 		n: &Statement{
 			Method: &MethodDecl{
 				TypeMethod: true,
@@ -650,6 +650,30 @@ var tests = []struct {
 								},
 							},
 						},
+					},
+				},
+			},
+		},
+	},
+
+	{
+		s: `enum {
+			NSScaleProportionally = 0,
+			NSScaleToFit,
+			NSScaleNone
+		 };`,
+		n: &Statement{
+			Enum: &EnumDecl{
+				Consts: []VariableDecl{
+					{
+						Name:  "NSScaleProportionally",
+						Value: "0",
+					},
+					{
+						Name: "NSScaleToFit",
+					},
+					{
+						Name: "NSScaleNone",
 					},
 				},
 			},

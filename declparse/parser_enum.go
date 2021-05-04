@@ -1,0 +1,56 @@
+package declparse
+
+import (
+	"fmt"
+
+	"github.com/progrium/macschema/declparse/keywords"
+	"github.com/progrium/macschema/lexer"
+)
+
+func parseEnum(p *Parser) (next stateFn, node Node, err error) {
+	decl := &EnumDecl{}
+
+	if err := p.expectToken(keywords.ENUM); err != nil {
+		return nil, nil, err
+	}
+
+	decl.Name, err = p.expectIdent()
+	if err != nil {
+		p.tb.Unscan()
+	}
+
+	if err := p.expectToken(lexer.LCURLY); err != nil {
+		return nil, nil, err
+	}
+
+	for {
+		enum := VariableDecl{}
+
+		if enum.Name, err = p.expectIdent(); err != nil {
+			p.tb.Unscan()
+		}
+
+		if err := p.expectToken(lexer.EQ); err == nil {
+			tok, pos, lit := p.tb.Scan()
+			if tok != lexer.INTEGER && tok != lexer.DECIMAL {
+				return nil, nil, fmt.Errorf("found %q, expected numeric at %v", lit, pos)
+			}
+			enum.Value = lit
+		} else {
+			p.tb.Unscan()
+		}
+
+		decl.Consts = append(decl.Consts, enum)
+
+		if tok, _, _ := p.tb.Scan(); tok != lexer.COMMA {
+			p.tb.Unscan()
+			break
+		}
+	}
+
+	if err := p.expectToken(lexer.RCURLY); err != nil {
+		return nil, nil, err
+	}
+
+	return nil, decl, nil
+}
