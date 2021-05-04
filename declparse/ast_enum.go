@@ -71,6 +71,11 @@ const (
 	TypeAnnotSigned
 	TypeAnnotUnsigned
 	TypeAnnotKindOf
+	TypeAnnotIn
+	TypeAnnotOut
+	TypeAnnotInout
+	TypeAnnotByCopy
+	TypeAnnotByRef
 
 	annonatedType
 
@@ -85,6 +90,11 @@ var typeAnnots = map[TypeAnnotation]string{
 	TypeAnnotSigned:          "signed %s",
 	TypeAnnotUnsigned:        "unsigned %s",
 	TypeAnnotKindOf:          "__kindof %s",
+	TypeAnnotIn:              "in %s",
+	TypeAnnotOut:             "out %s",
+	TypeAnnotInout:           "inout %s",
+	TypeAnnotByCopy:          "bycopy %s",
+	TypeAnnotByRef:           "byref %s",
 	TypeAnnotNullable:        "%s _Nullable",
 	TypeAnnotNonnull:         "%s _Nonnull",
 	TypeAnnotNullUnspecified: "%s _Null_unspecified",
