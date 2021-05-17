@@ -19,32 +19,50 @@ func parseEnum(p *Parser) (next stateFn, node Node, err error) {
 		p.tb.Unscan()
 	}
 
+	if err := p.expectToken(lexer.COLON); err == nil {
+		ti, err := p.expectType(false)
+		if err != nil {
+			return nil, nil, err
+		}
+		decl.Type = *ti
+	} else {
+		p.tb.Unscan()
+	}
+
 	if err := p.expectToken(lexer.LCURLY); err != nil {
 		return nil, nil, err
 	}
 
-	for {
-		enum := VariableDecl{}
-
-		if enum.Name, err = p.expectIdent(); err != nil {
-			p.tb.Unscan()
+	if err := p.expectToken(lexer.DOT); err == nil {
+		if _, err := p.expectDots(".."); err != nil {
+			return nil, nil, err
 		}
+	} else {
+		p.tb.Unscan()
 
-		if err := p.expectToken(lexer.EQ); err == nil {
-			tok, pos, lit := p.tb.Scan()
-			if tok != lexer.INTEGER && tok != lexer.DECIMAL {
-				return nil, nil, fmt.Errorf("found %q, expected numeric at %v", lit, pos)
+		for {
+			enum := VariableDecl{}
+
+			if enum.Name, err = p.expectIdent(); err != nil {
+				p.tb.Unscan()
 			}
-			enum.Value = lit
-		} else {
-			p.tb.Unscan()
-		}
 
-		decl.Consts = append(decl.Consts, enum)
+			if err := p.expectToken(lexer.EQ); err == nil {
+				tok, pos, lit := p.tb.Scan()
+				if tok != lexer.INTEGER && tok != lexer.DECIMAL {
+					return nil, nil, fmt.Errorf("found %q, expected numeric at %v", lit, pos)
+				}
+				enum.Value = lit
+			} else {
+				p.tb.Unscan()
+			}
 
-		if tok, _, _ := p.tb.Scan(); tok != lexer.COMMA {
-			p.tb.Unscan()
-			break
+			decl.Cases = append(decl.Cases, enum)
+
+			if tok, _, _ := p.tb.Scan(); tok != lexer.COMMA {
+				p.tb.Unscan()
+				break
+			}
 		}
 	}
 

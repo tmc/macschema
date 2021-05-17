@@ -7,6 +7,9 @@ import (
 
 func TestAST_Strings(t *testing.T) {
 	for _, tt := range tests {
+		if tt.ParseOnly {
+			continue
+		}
 		t.Run(tt.s, func(t *testing.T) {
 			got := normalizeWhitespace(tt.n.String())
 			want := normalizeWhitespace(tt.s)

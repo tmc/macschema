@@ -6,28 +6,39 @@ import (
 )
 
 func (s Statement) String() string {
+	b := &strings.Builder{}
+	if s.Typedef != "" {
+		b.WriteString("typedef ")
+	}
 	if s.Method != nil {
-		return s.Method.String() + ";"
+		b.WriteString(s.Method.String())
 	}
 	if s.Property != nil {
-		return s.Property.String() + ";"
+		b.WriteString(s.Property.String())
 	}
 	if s.Interface != nil {
-		return s.Interface.String() + ";"
+		b.WriteString(s.Interface.String())
 	}
 	if s.Protocol != nil {
-		return s.Protocol.String() + ";"
+		b.WriteString(s.Protocol.String())
 	}
 	if s.Function != nil {
-		return s.Function.String() + ";"
+		b.WriteString(s.Function.String())
 	}
 	if s.Variable != nil {
-		return s.Variable.String() + ";"
+		b.WriteString(s.Variable.String())
 	}
 	if s.Enum != nil {
-		return s.Enum.String() + ";"
+		b.WriteString(s.Enum.String())
 	}
-	return ""
+	if s.Struct != nil {
+		b.WriteString(s.Struct.String())
+	}
+	if s.Typedef != "" {
+		fmt.Fprintf(b, " %s", s.Typedef)
+	}
+	b.WriteString(";")
+	return b.String()
 }
 
 func (i ProtocolDecl) String() string {
@@ -161,22 +172,40 @@ func (v VariableDecl) String() string {
 func (e EnumDecl) String() string {
 	b := &strings.Builder{}
 	if e.Name != "" {
-		fmt.Fprintf(b, "enum %s { ", e.Name)
+		if e.Type.Name != "" {
+			fmt.Fprintf(b, "enum %s : %s { ", e.Name, e.Type.String())
+		} else {
+			fmt.Fprintf(b, "enum %s { ", e.Name)
+		}
 	} else {
 		b.WriteString("enum { ")
 	}
-	for idx, c := range e.Consts {
+	for idx, c := range e.Cases {
 		if c.Value != "" {
 			fmt.Fprintf(b, "%s = %s", c.Name, c.Value)
 		} else {
 			fmt.Fprintf(b, "%s", c.Name)
 		}
-		if idx == len(e.Consts)-1 {
+		if idx == len(e.Cases)-1 {
 			b.WriteString(" ")
 		} else {
 			b.WriteString(", ")
 		}
 	}
+	b.WriteString("}")
+	return b.String()
+}
+
+func (s StructDecl) String() string {
+	b := &strings.Builder{}
+	if s.Name != "" {
+		fmt.Fprintf(b, "struct %s { ", s.Name)
+	} else {
+		b.WriteString("struct { ")
+	}
+	// for idx, c := range s.Fields {
+	// 	// TODO
+	// }
 	b.WriteString("}")
 	return b.String()
 }

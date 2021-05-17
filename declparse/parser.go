@@ -9,8 +9,19 @@ import (
 	"github.com/progrium/macschema/lexer"
 )
 
+type Hint int
+
+const (
+	HintNone Hint = iota
+	HintVariable
+	HintEnumCase
+	HintFunction
+)
+
 type Parser struct {
-	tb *lexer.TokenBuffer
+	tb      *lexer.TokenBuffer
+	typedef bool
+	Hint    Hint
 }
 
 func NewParser(r io.Reader) *Parser {
@@ -24,7 +35,14 @@ func NewStringParser(s string) *Parser {
 func (p *Parser) Parse() (*Statement, error) {
 	p.tb.IgnoreWhitespace = true
 
-	tok, _, lit := p.tb.Peek()
+	tok, _, lit := p.tb.Scan()
+	if tok == keywords.TYPEDEF {
+		p.typedef = true
+	} else {
+		p.tb.Unscan()
+	}
+
+	tok, _, lit = p.tb.Peek()
 	switch tok {
 	case lexer.PLUS, lexer.MINUS:
 		decl, err := p.parse(parseMethod)
@@ -55,10 +73,42 @@ func (p *Parser) Parse() (*Statement, error) {
 		if err != nil {
 			return nil, err
 		}
-		return &Statement{Enum: decl.(*EnumDecl)}, nil
+		return &Statement{Enum: decl.(*EnumDecl), Typedef: p.finishTypedef()}, nil
+	case keywords.CONST:
+		decl, err := p.parse(parseVariable)
+		if err != nil {
+			return nil, err
+		}
+		return &Statement{Variable: decl.(*VariableDecl)}, nil
+	case keywords.STRUCT:
+		decl, err := p.parse(parseStruct)
+		if err != nil {
+			return nil, err
+		}
+		return &Statement{Struct: decl.(*StructDecl), Typedef: p.finishTypedef()}, nil
 	default:
-		// TODO: parseFunction
-		return nil, fmt.Errorf("unable to parse token: %s %s", tok, lit)
+		if p.Hint == HintVariable {
+			decl, err := p.parse(parseVariable)
+			if err != nil {
+				return nil, err
+			}
+			return &Statement{Variable: decl.(*VariableDecl)}, nil
+		}
+		if p.Hint == HintEnumCase {
+			decl, err := p.parse(parseEnumCase)
+			if err != nil {
+				return nil, err
+			}
+			return &Statement{Variable: decl.(*VariableDecl)}, nil
+		}
+		if p.Hint == HintFunction {
+			decl, err := p.parse(parseFunction)
+			if err != nil {
+				return nil, err
+			}
+			return &Statement{Function: decl.(*FunctionDecl)}, nil
+		}
+		return nil, fmt.Errorf("unable to parse start token: %s %s", tok, lit)
 	}
 }
 
@@ -69,6 +119,14 @@ func (p *Parser) parse(startState stateFn) (n Node, err error) {
 		state, n, err = state(p)
 	}
 	return
+}
+
+func (p *Parser) finishTypedef() string {
+	if p.typedef == false {
+		return ""
+	}
+	id, _ := p.expectIdent()
+	return id
 }
 
 func (p *Parser) expectToken(t lexer.Token) error {

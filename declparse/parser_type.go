@@ -15,12 +15,12 @@ func (p *Parser) expectType(parens bool) (ti *TypeInfo, err error) {
 
 	// type annotations before name
 	for {
-		lit, err := p.expectIdent()
-		if err != nil {
-			return nil, err
+		tok, _, lit := p.tb.Scan()
+		if lit == "" {
+			lit = tok.String()
 		}
 
-		if annot, ok := isTypeAnnot(lit, true); ok {
+		if annot, ok := isTypeAnnot(lit); ok {
 			ti.Annots[annot] = true
 		} else {
 			p.tb.Unscan()
@@ -78,13 +78,12 @@ func (p *Parser) expectType(parens bool) (ti *TypeInfo, err error) {
 
 	// type annotations after name
 	for {
-		lit, err := p.expectIdent()
-		if err != nil {
-			p.tb.Unscan()
-			break
+		tok, _, lit := p.tb.Scan()
+		if lit == "" {
+			lit = tok.String()
 		}
 
-		if annot, ok := isTypeAnnot(lit, false); ok {
+		if annot, ok := isTypeAnnot(lit); ok {
 			ti.Annots[annot] = true
 		} else {
 			p.tb.Unscan()

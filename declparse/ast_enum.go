@@ -125,14 +125,8 @@ func TypeAnnotations() []TypeAnnotation {
 	return annots
 }
 
-func isTypeAnnot(s string, beforeType bool) (TypeAnnotation, bool) {
+func isTypeAnnot(s string) (TypeAnnotation, bool) {
 	for _, annot := range TypeAnnotations() {
-		if beforeType && annot > annonatedType {
-			continue
-		}
-		if !beforeType && annot < annonatedType {
-			continue
-		}
 		if s == annot.String() {
 			return annot, true
 		}

@@ -1,8 +1,10 @@
 package declparse
 
 var tests = []struct {
-	s string
-	n Node
+	s         string
+	n         Node
+	ParseOnly bool
+	Hint      Hint
 }{
 
 	{
@@ -664,7 +666,7 @@ var tests = []struct {
 		 };`,
 		n: &Statement{
 			Enum: &EnumDecl{
-				Consts: []VariableDecl{
+				Cases: []VariableDecl{
 					{
 						Name:  "NSScaleProportionally",
 						Value: "0",
@@ -677,6 +679,67 @@ var tests = []struct {
 					},
 				},
 			},
+		},
+	},
+
+	{
+		s: `const NSURLResourceKey NSURLVolumeURLForRemountingKey;`,
+		n: &Statement{
+			Variable: &VariableDecl{
+				Name: "NSURLVolumeURLForRemountingKey",
+				Type: TypeInfo{
+					Name: "NSURLResourceKey",
+					Annots: map[TypeAnnotation]bool{
+						TypeAnnotConst: true,
+					},
+				},
+			},
+		},
+	},
+
+	{
+		ParseOnly: true,
+		Hint:      HintVariable,
+		s:         `NSString *const NSAssertionHandlerKey;`,
+		n: &Statement{
+			Variable: &VariableDecl{
+				Name: "NSAssertionHandlerKey",
+				Type: TypeInfo{
+					Name:  "NSString",
+					IsPtr: true,
+					Annots: map[TypeAnnotation]bool{
+						TypeAnnotConst: true,
+					},
+				},
+			},
+		},
+	},
+
+	{
+		ParseOnly: true,
+		Hint:      HintEnumCase,
+		s:         `kCALayerLeftEdge = 1U << 0`,
+		n: &Statement{
+			Variable: &VariableDecl{
+				Name:  "kCALayerLeftEdge",
+				Value: "1U<<0",
+			},
+		},
+	},
+
+	{
+		ParseOnly: true,
+		s: `typedef enum WKUserScriptInjectionTime : NSInteger {
+			...
+		} WKUserScriptInjectionTime;`,
+		n: &Statement{
+			Enum: &EnumDecl{
+				Name: "WKUserScriptInjectionTime",
+				Type: TypeInfo{
+					Name: "NSInteger",
+				},
+			},
+			Typedef: "WKUserScriptInjectionTime",
 		},
 	},
 }
