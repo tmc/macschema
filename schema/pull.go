@@ -14,21 +14,168 @@ func PullSchema(l Lookup) Schema {
 	var s Schema
 	s.PullDate = t.LastFetch
 	s.Version = Version
+
+	switch t.Type {
+	case "Class":
+		schemaForClass(&s, t)
+	case "Type Alias":
+		schemaForTypeAlias(&s, t)
+	case "Structure":
+		schemaForStruct(&s, t)
+	case "Global Variable":
+		println(t.Type)
+	case "Enumeration":
+		schemaForEnum(&s, t)
+	case "Function":
+		println("TODO")
+	default:
+		fatal(fmt.Errorf("schema not supported for %s", t.Type))
+	}
+
+	return s
+}
+
+func identifierFromTopic(t Topic) (id Identifier) {
+	id.Declaration = t.Declaration
+	id.Name = t.Title
+	id.Description = t.Description
+	id.Frameworks = t.Frameworks
+	id.TopicURL = BaseURL + strings.Replace(t.Path, "/documentation/", "", 1)
+	for _, p := range t.Platforms {
+		if p == "Deprecated" {
+			id.Deprecated = true
+		} else {
+			id.Platforms = append(id.Platforms, p)
+		}
+	}
+	return
+}
+
+func schemaForEnum(s *Schema, t Topic) {
+	s.Kind = "enum"
+
+	id := identifierFromTopic(t)
+
+	var en Enum
+	if t.Declaration != "" {
+		p := declparse.NewStringParser(t.Declaration)
+		ast, err := p.Parse()
+		if err != nil {
+			fatal(fmt.Errorf("%s: %w [%s]", id.TopicURL, err, t.Declaration))
+		}
+		en = EnumFromAst(*ast.Enum)
+	}
+	en.Identifier = id
+
+	for _, topic := range t.Topics {
+		t, err := ReadTopic(LookupFromPath(topic.Path))
+		fatal(err)
+		if t.Type != "Enumeration Case" {
+			continue
+		}
+		id := identifierFromTopic(t)
+		var ecase Variable
+		if t.Declaration != "" {
+			p := declparse.NewStringParser(t.Declaration)
+			p.Hint = declparse.HintEnumCase
+			ast, err := p.Parse()
+			if err != nil {
+				fatal(fmt.Errorf("%s: %w [%s]", id.TopicURL, err, t.Declaration))
+			}
+			ecase = VariableFromAst(*ast.Variable)
+		}
+		ecase.Identifier = id
+		en.Cases = append(en.Cases, ecase)
+	}
+
+	s.Enum = &en
+}
+
+func schemaForStruct(s *Schema, t Topic) {
+	s.Kind = "struct"
+
+	id := identifierFromTopic(t)
+
+	var st Struct
+	if t.Declaration != "" {
+		p := declparse.NewStringParser(t.Declaration)
+		ast, err := p.Parse()
+		if err != nil {
+			fatal(fmt.Errorf("%s: %w [%s]", id.TopicURL, err, t.Declaration))
+		}
+		st = StructFromAst(*ast.Struct)
+	}
+	st.Identifier = id
+
+	for _, topic := range t.Topics {
+		t, err := ReadTopic(LookupFromPath(topic.Path))
+		fatal(err)
+		if t.Type != "Instance Property" {
+			continue
+		}
+		id := identifierFromTopic(t)
+		var prop Variable
+		if t.Declaration != "" {
+			p := declparse.NewStringParser(t.Declaration)
+			p.Hint = declparse.HintVariable
+			ast, err := p.Parse()
+			if err != nil {
+				fatal(fmt.Errorf("%s: %w [%s]", id.TopicURL, err, t.Declaration))
+			}
+			prop = VariableFromAst(*ast.Variable)
+		}
+		prop.Identifier = id
+		st.Fields = append(st.Fields, prop)
+	}
+
+	s.Struct = &st
+}
+
+func schemaForTypeAlias(s *Schema, t Topic) {
+	s.Kind = "typealias"
+
+	var ta TypeAlias
+	ta.Identifier = identifierFromTopic(t)
+	if t.Declaration != "" {
+		p := declparse.NewStringParser(t.Declaration)
+		ast, err := p.Parse()
+		if err != nil {
+			fatal(fmt.Errorf("%s: %w [%s]", ta.TopicURL, err, t.Declaration))
+		}
+		ta.Type = DataTypeFromAst(*ast.TypeAlias)
+	}
+
+	for _, topic := range t.Topics {
+		t, err := ReadTopic(LookupFromPath(topic.Path))
+		fatal(err)
+		if t.Type != "Global Variable" {
+			continue
+		}
+		id := identifierFromTopic(t)
+		var val Variable
+		if t.Declaration != "" {
+			p := declparse.NewStringParser(t.Declaration)
+			p.Hint = declparse.HintVariable
+			ast, err := p.Parse()
+			if err != nil {
+				fatal(fmt.Errorf("%s: %w [%s]", id.TopicURL, err, t.Declaration))
+			}
+			val = VariableFromAst(*ast.Variable)
+		}
+		val.Identifier = id
+		if val.Type.Name == ta.Name {
+			ta.Values = append(ta.Values, val)
+		}
+	}
+
+	s.TypeAlias = &ta
+}
+
+func schemaForClass(s *Schema, t Topic) {
 	s.Kind = "class"
 
 	var c Class
-	c.Declaration = t.Declaration
-	c.Name = t.Title
-	c.Description = t.Description
-	c.Frameworks = t.Frameworks
-	c.TopicURL = BaseURL + strings.Replace(t.Path, "/documentation/", "", 1)
-	for _, p := range t.Platforms {
-		if p == "Deprecated" {
-			c.Deprecated = true
-		} else {
-			c.Platforms = append(c.Platforms, p)
-		}
-	}
+	c.Identifier = identifierFromTopic(t)
 	for _, topic := range t.Topics {
 		t, err := ReadTopic(LookupFromPath(topic.Path))
 		fatal(err)
@@ -49,11 +196,7 @@ func PullSchema(l Lookup) Schema {
 			p := declparse.NewStringParser(t.Declaration)
 			ast, err := p.Parse()
 			if err != nil {
-				if strings.Contains(err.Error(), "typedef") ||
-					strings.Contains(err.Error(), "const") {
-					continue
-				}
-				fatal(fmt.Errorf("%s: %w", topic.Path, err))
+				fatal(fmt.Errorf("%s: %w [%s]", topic.Path, err, t.Declaration))
 			}
 			url := BaseURL + strings.Replace(t.Path, "/documentation/", "", 1)
 			switch t.Type {
@@ -91,5 +234,4 @@ func PullSchema(l Lookup) Schema {
 	}
 
 	s.Class = &c
-	return s
 }

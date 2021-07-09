@@ -39,9 +39,9 @@ func FuncFromAst(fn *declparse.FunctionDecl) *Func {
 		args = append(args, ArgFromAst(arg))
 	}
 	return &Func{
-		Name:   fn.Name,
-		Return: DataTypeFromAst(fn.ReturnType),
-		Args:   args,
+		Identifier: Identifier{Name: fn.Name},
+		Return:     DataTypeFromAst(fn.ReturnType),
+		Args:       args,
 	}
 }
 
@@ -80,5 +80,36 @@ func MethodFromAst(m declparse.MethodDecl) Method {
 		Name:   m.Name(),
 		Return: DataTypeFromAst(m.ReturnType),
 		Args:   args,
+	}
+}
+
+func VariableFromAst(v declparse.VariableDecl) Variable {
+	return Variable{
+		Identifier: Identifier{Name: v.Name},
+		Value:      v.Value,
+		Type:       DataTypeFromAst(v.Type),
+	}
+}
+
+func EnumFromAst(e declparse.EnumDecl) Enum {
+	var cases []Variable
+	for _, ecase := range e.Cases {
+		cases = append(cases, VariableFromAst(ecase))
+	}
+	return Enum{
+		Identifier: Identifier{Name: e.Name},
+		Type:       DataTypeFromAst(e.Type),
+		Cases:      cases,
+	}
+}
+
+func StructFromAst(s declparse.StructDecl) Struct {
+	var fields []Variable
+	for _, field := range s.Fields {
+		fields = append(fields, VariableFromAst(field))
+	}
+	return Struct{
+		Identifier: Identifier{Name: s.Name},
+		Fields:     fields,
 	}
 }

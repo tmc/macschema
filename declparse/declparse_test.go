@@ -742,4 +742,30 @@ var tests = []struct {
 			Typedef: "WKUserScriptInjectionTime",
 		},
 	},
+
+	{
+		ParseOnly: true,
+		s:         `typedef NSString *NSDeviceDescriptionKey;`,
+		n: &Statement{
+			TypeAlias: &TypeInfo{
+				Name:  "NSString",
+				IsPtr: true,
+			},
+			Typedef: "NSDeviceDescriptionKey",
+		},
+	},
+
+	{
+		ParseOnly: true,
+		Hint:      HintVariable,
+		s:         `CGPoint origin;`,
+		n: &Statement{
+			Variable: &VariableDecl{
+				Name: "origin",
+				Type: TypeInfo{
+					Name: "CGPoint",
+				},
+			},
+		},
+	},
 }

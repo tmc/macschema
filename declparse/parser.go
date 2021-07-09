@@ -108,6 +108,13 @@ func (p *Parser) Parse() (*Statement, error) {
 			}
 			return &Statement{Function: decl.(*FunctionDecl)}, nil
 		}
+		if p.typedef {
+			ti, err := p.expectType(false)
+			if err != nil {
+				return nil, err
+			}
+			return &Statement{TypeAlias: ti, Typedef: p.finishTypedef()}, nil
+		}
 		return nil, fmt.Errorf("unable to parse start token: %s %s", tok, lit)
 	}
 }

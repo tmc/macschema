@@ -5,29 +5,38 @@ import (
 )
 
 type Schema struct {
-	Class *Class `json:",omitempty"`
+	Class     *Class     `json:",omitempty"`
+	Function  *Func      `json:",omitempty"`
+	Variable  *Variable  `json:",omitempty"`
+	Enum      *Enum      `json:",omitempty"`
+	Struct    *Struct    `json:",omitempty"`
+	TypeAlias *TypeAlias `json:",omitempty"`
 
 	Kind     string
 	PullDate time.Time
 	Version  int
 }
 
+type Identifier struct {
+	Name        string `json:",omitempty"`
+	Description string `json:",omitempty"`
+	Declaration string `json:",omitempty"`
+
+	Frameworks []string `json:",omitempty"`
+	Platforms  []string `json:",omitempty"`
+
+	Deprecated bool   `json:",omitempty"`
+	TopicURL   string `json:",omitempty"`
+}
+
 type Class struct {
-	Name        string
-	Description string
-	Declaration string
+	Identifier
 
 	InstanceMethods    []Method   `json:",omitempty"`
 	InstanceProperties []Property `json:",omitempty"`
 
 	TypeMethods    []Method   `json:",omitempty"`
 	TypeProperties []Property `json:",omitempty"`
-
-	Frameworks []string
-	Platforms  []string
-
-	Deprecated bool   `json:",omitempty"`
-	TopicURL   string `json:",omitempty"`
 }
 
 type DataType struct {
@@ -41,15 +50,42 @@ type DataType struct {
 }
 
 type Func struct {
-	Name     string `json:",omitempty"`
-	Return   DataType
-	Args     []Arg
-	TopicURL string `json:",omitempty"`
+	Identifier
+
+	Return DataType
+	Args   []Arg
 }
 
 type Arg struct {
 	Name string `json:",omitempty"`
 	Type DataType
+}
+
+type Variable struct {
+	Identifier
+
+	Type  DataType
+	Value string `json:",omitempty"`
+}
+
+type Enum struct {
+	Identifier
+
+	Type  DataType
+	Cases []Variable
+}
+
+type Struct struct {
+	Identifier
+
+	Fields []Variable
+}
+
+type TypeAlias struct {
+	Identifier
+
+	Type   DataType
+	Values []Variable `json:",omitempty"`
 }
 
 type Property struct {

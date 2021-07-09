@@ -18,6 +18,7 @@ type Statement struct {
 	Variable  *VariableDecl
 	Enum      *EnumDecl
 	Struct    *StructDecl
+	TypeAlias *TypeInfo
 	Typedef   string
 }
 
