@@ -16,9 +16,11 @@ var crawlCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		l := schema.NewLookup(args[0], flagLang)
+		opts := schema.FetchOptions{}
+		opts.Debug, _ = cmd.Flags().GetBool("debug")
 		ctx := context.Background()
 		if !l.DocExists() {
-			schema.FetchTopic(ctx, l)
+			schema.FetchTopic(ctx, l, opts)
 		}
 		t, err := schema.ReadTopic(l)
 		fatal(err)
@@ -30,7 +32,7 @@ var crawlCmd = &cobra.Command{
 				// TODO: check last fetch, version
 				continue
 			}
-			tt := schema.FetchTopic(ctx, ll)
+			tt := schema.FetchTopic(ctx, ll, fetchOptions(cmd))
 			fatal(writeTopic(ll, tt))
 			fmt.Fprintf(os.Stderr, "   %s [%s]\n", ll.DocPath, time.Since(tt.LastFetch))
 		}

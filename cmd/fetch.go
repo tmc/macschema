@@ -13,6 +13,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func fetchOptions(cmd *cobra.Command) schema.FetchOptions {
+	opts := schema.FetchOptions{}
+	opts.Debug, _ = cmd.Flags().GetBool("debug")
+	opts.Timeout, _ = cmd.Flags().GetDuration("timeout")
+	return opts
+}
+
 var fetchCmd = &cobra.Command{
 	Use:   "fetch",
 	Short: "Download a topic to doc dir",
@@ -28,7 +35,7 @@ var fetchCmd = &cobra.Command{
 		}
 
 		ctx := context.Background()
-		t := schema.FetchTopic(ctx, l)
+		t := schema.FetchTopic(ctx, l, fetchOptions(cmd))
 		fatal(writeTopic(l, t))
 		fmt.Fprintf(os.Stderr, "=> %s [%s]\n", l.DocPath, time.Since(t.LastFetch))
 	},

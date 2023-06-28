@@ -2,6 +2,7 @@ package schema
 
 import (
 	"context"
+	"log"
 	"net/url"
 	"strings"
 	"time"
@@ -10,12 +11,28 @@ import (
 	"github.com/chromedp/chromedp"
 )
 
-func FetchTopic(ctx context.Context, l Lookup) Topic {
+const defaultTimeout = 20 * time.Second
+
+type FetchOptions struct {
+	Debug   bool
+	Timeout time.Duration
+}
+
+func FetchTopic(ctx context.Context, l Lookup, opts FetchOptions) Topic {
 	u, _ := url.Parse(l.URL)
 
-	ctx, cancel := chromedp.NewContext(ctx)
+	var copts []chromedp.ContextOption
+	if opts.Debug {
+		copts = append(copts, chromedp.WithDebugf(log.Printf))
+	}
+	ctx, cancel := chromedp.NewContext(ctx, copts...)
 	defer cancel()
-	ctx, cancel = context.WithTimeout(ctx, 60*time.Second)
+
+	to := opts.Timeout
+	if to == 0 {
+		to = defaultTimeout
+	}
+	ctx, cancel = context.WithTimeout(ctx, to)
 	defer cancel()
 
 	var t Topic
@@ -58,7 +75,6 @@ func FetchTopic(ctx context.Context, l Lookup) Topic {
 				)
 				t.Topics = append(t.Topics, l)
 			}
-
 		}
 	}
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"runtime"
+	"time"
 
 	"github.com/spf13/cobra"
 )
@@ -13,6 +14,9 @@ var (
 
 	flagShow bool
 	flagLang string
+
+	flagDebug   bool
+	flagTimeout time.Duration
 
 	flagPullConcurrency int
 
@@ -32,6 +36,9 @@ func init() {
 
 	rootCmd.PersistentFlags().BoolVar(&flagShow, "show", false, "show resulting JSON to stdout")
 	rootCmd.PersistentFlags().StringVar(&flagLang, "lang", "objc", "use language")
+
+	rootCmd.PersistentFlags().BoolVar(&flagDebug, "debug", false, "enable debug logging")
+	rootCmd.PersistentFlags().DurationVar(&flagTimeout, "timeout", 20*time.Second, "timeout duration")
 }
 
 func Execute() {
