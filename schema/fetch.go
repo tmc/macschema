@@ -15,7 +15,7 @@ func FetchTopic(ctx context.Context, l Lookup) Topic {
 
 	ctx, cancel := chromedp.NewContext(ctx)
 	defer cancel()
-	ctx, cancel = context.WithTimeout(ctx, 20*time.Second)
+	ctx, cancel = context.WithTimeout(ctx, 60*time.Second)
 	defer cancel()
 
 	var t Topic
