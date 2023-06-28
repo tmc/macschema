@@ -25,7 +25,7 @@ var pullCmd = &cobra.Command{
 		l := schema.NewLookup(args[0], flagLang)
 		if !l.DocExists() {
 			fmt.Fprintln(os.Stderr, "=> Fetching topic...")
-			t := schema.FetchTopic(ctx, l)
+			t := schema.FetchTopic(ctx, l, fetchOptions(cmd))
 			fatal(writeTopic(l, t))
 		}
 		t, err := schema.ReadTopic(l)
@@ -44,7 +44,7 @@ var pullCmd = &cobra.Command{
 			go func() {
 				defer sem.Release(1)
 				fmt.Fprintln(os.Stderr, "  ", ll.DocPath)
-				tt := schema.FetchTopic(ctx, ll)
+				tt := schema.FetchTopic(ctx, ll, fetchOptions(cmd))
 				fatal(writeTopic(ll, tt))
 			}()
 		}
