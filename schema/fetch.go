@@ -44,10 +44,11 @@ func FetchTopic(ctx context.Context, l Lookup) Topic {
 	short, _ = context.WithTimeout(ctx, dur)
 	err := chromedp.Run(short, chromedp.WaitVisible(`#topics`))
 	if err == nil {
-		for _, section := range nodes(ctx, "#topics div.contenttable-section", nil) {
+		sections := nodes(ctx, "div.doc-content > section.contenttable", nil)
+		parent := sections[0]
+		for _, section := range nodes(ctx, "div.contenttable-section", parent) {
 			var title string
-			mustRun(ctx, chromedp.Text("div.section-title h3.title", &title, chromedp.ByQuery, chromedp.FromNode(section)))
-			//fmt.Println(title)
+			mustRun(ctx, chromedp.Text("div.section-title h3.contenttable-title", &title, chromedp.ByQuery, chromedp.FromNode(section)))
 			for _, topic := range nodes(ctx, "div.section-content div.topic a.link", section) {
 				var ok bool
 				l := Link{Section: title}
