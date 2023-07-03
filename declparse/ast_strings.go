@@ -91,11 +91,17 @@ func (p PropertyDecl) String() string {
 }
 
 func (args FuncArgs) String() string {
-	var str []string
-	for _, arg := range args {
-		str = append(str, strings.Trim(fmt.Sprintf("%s %s", arg.Type, arg.Name), " "))
+	if len(args) == 0 {
+		return "void"
+	} else if len(args) == 1 && args[0].Type.Name == "void" {
+		return "void"
+	} else {
+		var str []string
+		for _, arg := range args {
+			str = append(str, strings.Trim(fmt.Sprintf("%s %s", arg.Type, arg.Name), " "))
+		}
+		return strings.Join(str, ", ")
 	}
-	return strings.Join(str, ", ")
 }
 
 func (f FunctionDecl) String() string {

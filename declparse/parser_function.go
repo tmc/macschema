@@ -6,7 +6,7 @@ func parseFunction(p *Parser) (next stateFn, node Node, err error) {
 		return nil, nil, err
 	}
 
-	decl, err := p.expectFuncType(typ)
+	decl, err := p.expectFuncType(typ, true)
 	if err != nil {
 		return nil, nil, err
 	}

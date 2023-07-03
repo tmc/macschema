@@ -94,7 +94,7 @@ func (p *Parser) expectType(parens bool) (ti *TypeInfo, err error) {
 	// detect function type
 	if tok, _, _ := p.tb.Scan(); tok == lexer.LPAREN {
 		p.tb.Unscan()
-		ti.Func, err = p.expectFuncType(ti)
+		ti.Func, err = p.expectFuncType(ti, false)
 		if err != nil {
 			return nil, err
 		}

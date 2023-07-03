@@ -785,4 +785,16 @@ var tests = []struct {
 			},
 		},
 	},
+	{
+		s:    `CFTypeID CGEventGetTypeID(void);`,
+		Hint: HintFunction,
+		n: &Statement{
+			Function: &FunctionDecl{
+				ReturnType: TypeInfo{
+					Name: "CFTypeID",
+				},
+				Name: "CGEventGetTypeID",
+			},
+		},
+	},
 }

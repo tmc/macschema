@@ -6,7 +6,7 @@ import (
 	"github.com/progrium/macschema/lexer"
 )
 
-func (p *Parser) expectFuncType(returnType *TypeInfo) (fn *FunctionDecl, err error) {
+func (p *Parser) expectFuncType(returnType *TypeInfo, isTopLevel bool) (fn *FunctionDecl, err error) {
 	fn = &FunctionDecl{ReturnType: TypeInfo{
 		Name:     returnType.Name,
 		Annots:   returnType.Annots,
@@ -52,6 +52,11 @@ func (p *Parser) expectFuncType(returnType *TypeInfo) (fn *FunctionDecl, err err
 			return nil, err
 		}
 		arg.Type = *typ
+
+		// If type is "void", we break the loop without appending arg
+		if isTopLevel && arg.Type.Name == "void" {
+			break
+		}
 
 		if arg.Name, err = p.expectIdent(); err != nil {
 			p.tb.Unscan()
