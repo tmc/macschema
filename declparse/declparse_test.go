@@ -42,10 +42,8 @@ var tests = []struct {
 							Name: "ObjectType",
 						},
 					},
-					{
-						Name: "...",
-					},
 				},
+				Variadic: true,
 			},
 		},
 	},
@@ -782,6 +780,57 @@ var tests = []struct {
 				Type: TypeInfo{
 					Name: "CGPoint",
 				},
+			},
+		},
+	},
+	{
+		s:    `CFTypeID CGEventGetTypeID(void);`,
+		Hint: HintFunction,
+		n: &Statement{
+			Function: &FunctionDecl{
+				ReturnType: TypeInfo{
+					Name: "CFTypeID",
+				},
+				Name: "CGEventGetTypeID",
+			},
+		},
+	},
+	{
+		s:    `CGEventRef CGEventCreateScrollWheelEvent(CGEventSourceRef source, CGScrollEventUnit units, uint32_t wheelCount, int32_t wheel1, ...);`,
+		Hint: HintFunction,
+		n: &Statement{
+			Function: &FunctionDecl{
+				ReturnType: TypeInfo{
+					Name: "CGEventRef",
+				},
+				Name: "CGEventCreateScrollWheelEvent",
+				Args: FuncArgs{
+					{
+						Name: "source",
+						Type: TypeInfo{
+							Name: "CGEventSourceRef",
+						},
+					},
+					{
+						Name: "units",
+						Type: TypeInfo{
+							Name: "CGScrollEventUnit",
+						},
+					},
+					{
+						Name: "wheelCount",
+						Type: TypeInfo{
+							Name: "uint32_t",
+						},
+					},
+					{
+						Name: "wheel1",
+						Type: TypeInfo{
+							Name: "int32_t",
+						},
+					},
+				},
+				Variadic: true,
 			},
 		},
 	},

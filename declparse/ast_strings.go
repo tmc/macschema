@@ -91,16 +91,29 @@ func (p PropertyDecl) String() string {
 }
 
 func (args FuncArgs) String() string {
-	var str []string
-	for _, arg := range args {
-		str = append(str, strings.Trim(fmt.Sprintf("%s %s", arg.Type, arg.Name), " "))
+	if len(args) == 0 {
+		return "void"
+	} else if len(args) == 1 && args[0].Type.Name == "void" {
+		return "void"
+	} else {
+		var str []string
+		for _, arg := range args {
+			str = append(str, strings.Trim(fmt.Sprintf("%s %s", arg.Type, arg.Name), " "))
+		}
+		return strings.Join(str, ", ")
 	}
-	return strings.Join(str, ", ")
 }
 
 func (f FunctionDecl) String() string {
 	b := &strings.Builder{}
-	fmt.Fprintf(b, "%s %s(%s)", f.ReturnType, f.Ident(), f.Args)
+	fmt.Fprintf(b, "%s %s(%s", f.ReturnType, f.Ident(), f.Args)
+	if f.Variadic {
+		if len(f.Args) > 0 {
+			b.WriteString(", ")
+		}
+		b.WriteString("...")
+	}
+	b.WriteString(")")
 	return b.String()
 }
 
@@ -118,9 +131,12 @@ func (m MethodDecl) String() string {
 			parts = append(parts, fmt.Sprintf("%s:%s", part, m.Args[arg]))
 		}
 		fmt.Fprintf(b, "%s (%s)%s", prefix, m.ReturnType, strings.Join(parts, " "))
-		if m.Args[len(m.Args)-1].Name == "..." {
-			b.WriteString(", ...")
+	}
+	if m.Variadic {
+		if len(m.Args) > 0 {
+			b.WriteString(", ")
 		}
+		b.WriteString("...")
 	}
 	return b.String()
 }
