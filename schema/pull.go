@@ -258,11 +258,11 @@ func schemaForAPICollection(s *Schema, t Topic) {
 		if t.Declaration != "" {
 			p := declparse.NewStringParser(t.Declaration)
 
-			if t.Type == "Function" {
-				p.Hint = declparse.HintFunction
-			} else {
-				panic(t.Type)
+			if t.Type != "Function" {
+				// TODO: Add more types
+				continue
 			}
+			p.Hint = declparse.HintFunction
 
 			ast, err := p.Parse()
 			if err != nil {
