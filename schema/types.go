@@ -12,6 +12,8 @@ type Schema struct {
 	Struct    *Struct    `json:",omitempty"`
 	TypeAlias *TypeAlias `json:",omitempty"`
 
+	APICollection *APICollection
+
 	Kind     string
 	PullDate time.Time
 	Version  int
@@ -37,6 +39,13 @@ type Class struct {
 
 	TypeMethods    []Method   `json:",omitempty"`
 	TypeProperties []Property `json:",omitempty"`
+}
+
+type APICollection struct {
+	Identifier
+
+	Functions []Func `json:",omitempty"`
+	Enums     []Enum `json:",omitempty"`
 }
 
 type DataType struct {
