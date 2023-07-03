@@ -45,6 +45,7 @@ type FunctionDecl struct {
 	Args       FuncArgs
 	IsBlock    bool
 	IsPtr      bool
+	Variadic   bool
 }
 
 func (f *FunctionDecl) Ident() string {
@@ -64,6 +65,7 @@ type MethodDecl struct {
 	ReturnType TypeInfo
 	NameParts  []string
 	Args       []ArgInfo
+	Variadic   bool
 }
 
 func (m *MethodDecl) Name() string {

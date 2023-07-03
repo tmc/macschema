@@ -52,8 +52,13 @@ func (s *Scanner) Scan() (tok Token, pos Pos, lit string) {
 		return s.scanString()
 	case '.':
 		ch1, _ := s.r.read()
+		ch2, _ := s.r.read()
+		if ch1 == '.' && ch2 == '.' {
+			return VARARG, pos, "..."
+		}
 		s.r.unread()
 		if isDigit(ch1) {
+			s.r.unread()
 			return s.scanNumber()
 		}
 		return DOT, pos, ""

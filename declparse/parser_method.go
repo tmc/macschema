@@ -48,12 +48,11 @@ func parseMethod(p *Parser) (next stateFn, node Node, err error) {
 			decl.Args = append(decl.Args, arg)
 
 			if tok, _, _ = p.tb.Scan(); tok == lexer.COMMA {
-				if _, err := p.expectDots("..."); err != nil {
-					return nil, nil, err
+				if tok, _, _ = p.tb.Scan(); tok == lexer.VARARG {
+					decl.Variadic = true
+				} else {
+					p.tb.Unscan()
 				}
-				decl.Args = append(decl.Args, ArgInfo{
-					Name: "...",
-				})
 			} else {
 				p.tb.Unscan()
 			}

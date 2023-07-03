@@ -21,11 +21,7 @@ func parseStruct(p *Parser) (next stateFn, node Node, err error) {
 		return nil, decl, nil
 	}
 
-	if err := p.expectToken(lexer.DOT); err == nil {
-		if _, err := p.expectDots(".."); err != nil {
-			return nil, nil, err
-		}
-	} else {
+	if err := p.expectToken(lexer.VARARG); err != nil {
 		p.tb.Unscan()
 
 		// TODO: fields

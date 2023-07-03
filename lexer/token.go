@@ -76,6 +76,8 @@ const (
 	LTE      // <=
 	GT       // >
 	GTE      // >=
+
+	VARARG // ...
 	endOperators
 )
 
@@ -100,6 +102,7 @@ var tokens = map[Token]string{
 	DOLLAR:      "$",
 	HASH:        "#",
 	ATSIGN:      "@",
+	VARARG:      "...",
 
 	IDENT:     "IDENT",
 	INTEGER:   "INTEGER",
