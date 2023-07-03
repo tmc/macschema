@@ -106,7 +106,14 @@ func (args FuncArgs) String() string {
 
 func (f FunctionDecl) String() string {
 	b := &strings.Builder{}
-	fmt.Fprintf(b, "%s %s(%s)", f.ReturnType, f.Ident(), f.Args)
+	fmt.Fprintf(b, "%s %s(%s", f.ReturnType, f.Ident(), f.Args)
+	if f.Variadic {
+		if len(f.Args) > 0 {
+			b.WriteString(", ")
+		}
+		b.WriteString("...")
+	}
+	b.WriteString(")")
 	return b.String()
 }
 
@@ -124,9 +131,12 @@ func (m MethodDecl) String() string {
 			parts = append(parts, fmt.Sprintf("%s:%s", part, m.Args[arg]))
 		}
 		fmt.Fprintf(b, "%s (%s)%s", prefix, m.ReturnType, strings.Join(parts, " "))
-		if m.Args[len(m.Args)-1].Name == "..." {
-			b.WriteString(", ...")
+	}
+	if m.Variadic {
+		if len(m.Args) > 0 {
+			b.WriteString(", ")
 		}
+		b.WriteString("...")
 	}
 	return b.String()
 }

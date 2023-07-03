@@ -151,18 +151,3 @@ func (p *Parser) expectIdent() (string, error) {
 	}
 	return lit, nil
 }
-
-func (p *Parser) expectDots(s string) (string, error) {
-	lit := ""
-	for i := 0; i < len(s); i++ {
-		t, _, _ := p.tb.Scan()
-		lit += t.String()
-		if len(lit) == len(s) {
-			break
-		}
-	}
-	if lit != s {
-		return "", fmt.Errorf("found %q, expected %q", lit, s)
-	}
-	return lit, nil
-}

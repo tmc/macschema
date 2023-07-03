@@ -47,6 +47,14 @@ func (p *Parser) expectFuncType(returnType *TypeInfo, isTopLevel bool) (fn *Func
 	for {
 		arg := ArgInfo{}
 
+		// Peek at the next token to check for '...'
+		if tok, _, _ := p.tb.Scan(); tok == lexer.VARARG {
+			fn.Variadic = true
+			break
+		} else {
+			p.tb.Unscan()
+		}
+
 		typ, err := p.expectType(false)
 		if err != nil {
 			return nil, err
