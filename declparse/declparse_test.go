@@ -834,4 +834,55 @@ var tests = []struct {
 			},
 		},
 	},
+	{
+		s:    `CFMachPortRef CGEventTapCreate(CGEventTapLocation tap, CGEventTapPlacement place, CGEventTapOptions options, CGEventMask eventsOfInterest, CGEventTapCallBack callback, void *userInfo);`,
+		Hint: HintFunction,
+		n: &Statement{
+			Function: &FunctionDecl{
+				ReturnType: TypeInfo{
+					Name: "CFMachPortRef",
+				},
+				Name: "CGEventTapCreate",
+				Args: FuncArgs{
+					{
+						Name: "tap",
+						Type: TypeInfo{
+							Name: "CGEventTapLocation",
+						},
+					},
+					{
+						Name: "place",
+						Type: TypeInfo{
+							Name: "CGEventTapPlacement",
+						},
+					},
+					{
+						Name: "options",
+						Type: TypeInfo{
+							Name: "CGEventTapOptions",
+						},
+					},
+					{
+						Name: "eventsOfInterest",
+						Type: TypeInfo{
+							Name: "CGEventMask",
+						},
+					},
+					{
+						Name: "callback",
+						Type: TypeInfo{
+							Name: "CGEventTapCallBack",
+						},
+					},
+					{
+						Name: "userInfo",
+						Type: TypeInfo{
+							Name:  "void",
+							IsPtr: true,
+						},
+					},
+				},
+			},
+		},
+	},
 }

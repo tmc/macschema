@@ -98,7 +98,11 @@ func (args FuncArgs) String() string {
 	} else {
 		var str []string
 		for _, arg := range args {
-			str = append(str, strings.Trim(fmt.Sprintf("%s %s", arg.Type, arg.Name), " "))
+			if arg.Type.Name == "void" {
+				str = append(str, strings.Trim(fmt.Sprintf("%s%s", arg.Type, arg.Name), " "))
+			} else {
+				str = append(str, strings.Trim(fmt.Sprintf("%s %s", arg.Type, arg.Name), " "))
+			}
 		}
 		return strings.Join(str, ", ")
 	}

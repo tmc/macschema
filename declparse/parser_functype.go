@@ -63,7 +63,12 @@ func (p *Parser) expectFuncType(returnType *TypeInfo, isTopLevel bool) (fn *Func
 
 		// If type is "void", we break the loop without appending arg
 		if isTopLevel && arg.Type.Name == "void" {
-			break
+			// if first arg and rparen is next, break
+			tok, _, _ := p.tb.Scan()
+			p.tb.Unscan()
+			if len(fn.Args) == 0 && tok == lexer.RPAREN {
+				break
+			}
 		}
 
 		if arg.Name, err = p.expectIdent(); err != nil {
