@@ -147,7 +147,7 @@ func (p *Parser) expectToken(t lexer.Token) error {
 func (p *Parser) expectIdent() (string, error) {
 	tok, pos, lit := p.tb.Scan()
 	if tok != lexer.IDENT {
-		return "", fmt.Errorf("found %q, expected identifier at %v", lit, pos)
+		return "", fmt.Errorf("found %s (%q), expected identifier at %v", tok, lit, pos)
 	}
 	return lit, nil
 }
