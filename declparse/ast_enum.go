@@ -82,6 +82,8 @@ const (
 	TypeAnnotNullable
 	TypeAnnotNonnull
 	TypeAnnotNullUnspecified
+	TypeAnnotStruct
+	TypeAnnotUnavailable
 )
 
 var typeAnnots = map[TypeAnnotation]string{
@@ -98,6 +100,7 @@ var typeAnnots = map[TypeAnnotation]string{
 	TypeAnnotNullable:        "%s _Nullable",
 	TypeAnnotNonnull:         "%s _Nonnull",
 	TypeAnnotNullUnspecified: "%s _Null_unspecified",
+	TypeAnnotStruct:          "struct %s",
 }
 
 func (annot TypeAnnotation) Format() string {

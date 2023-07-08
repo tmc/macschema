@@ -2,6 +2,7 @@ package schema
 
 import (
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/progrium/macschema/declparse"
@@ -28,8 +29,10 @@ func PullSchema(l Lookup) Schema {
 		schemaForEnum(&s, t)
 	case "Function":
 		println("TODO")
+	case "API Collection":
+		schemaForAPICollection(&s, t)
 	default:
-		fatal(fmt.Errorf("schema not supported for %s", t.Type))
+		fatal(fmt.Errorf("schema not supported for %q", t.Type))
 	}
 
 	return s
@@ -234,4 +237,51 @@ func schemaForClass(s *Schema, t Topic) {
 	}
 
 	s.Class = &c
+}
+
+func schemaForAPICollection(s *Schema, t Topic) {
+	s.Kind = "apicollection"
+
+	var ac APICollection
+	ac.Identifier = identifierFromTopic(t)
+	fmt.Println(ac.Identifier)
+	for _, topic := range t.Topics {
+		t, err := ReadTopic(LookupFromPath(topic.Path))
+		fatal(err)
+
+		var isDeprecated bool
+		for _, p := range t.Platforms {
+			if p == "Deprecated" {
+				isDeprecated = true
+			}
+		}
+		if t.Declaration != "" {
+			p := declparse.NewStringParser(t.Declaration)
+
+			if t.Type == "Function" {
+				p.Hint = declparse.HintFunction
+			} else {
+				panic(t.Type)
+			}
+
+			ast, err := p.Parse()
+			if err != nil {
+				fatal(fmt.Errorf("%s: %w [%s]", topic.Path, err, t.Declaration))
+			}
+			url := BaseURL + strings.Replace(t.Path, "/documentation/", "", 1)
+			switch t.Type {
+			case "Function":
+				m := FuncFromAst(ast.Function)
+				m.Description = t.Description
+				m.Declaration = t.Declaration
+				m.TopicURL = url
+				m.Deprecated = isDeprecated
+				ac.Functions = append(ac.Functions, *m)
+			default:
+				log.Println("unknown type", t.Type)
+			}
+		}
+	}
+
+	s.APICollection = &ac
 }

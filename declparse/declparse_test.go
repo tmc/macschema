@@ -834,4 +834,40 @@ var tests = []struct {
 			},
 		},
 	},
+	{
+		s: `+ (instancetype)allocWithZone:(struct _NSZone *)zone;`,
+		n: &Statement{
+			Method: &MethodDecl{
+				TypeMethod: true,
+				ReturnType: TypeInfo{
+					Name: "instancetype",
+				},
+				NameParts: []string{"allocWithZone"},
+				Args: FuncArgs{
+					{
+						Name: "zone",
+						Type: TypeInfo{
+							Name:  "_NSZone",
+							IsPtr: true,
+							Annots: map[TypeAnnotation]bool{
+								TypeAnnotStruct: true,
+							},
+						},
+					},
+				},
+			},
+		},
+	},
+	{
+		s: `- (instancetype)init NS_UNAVAILABLE;`,
+		n: &Statement{
+			Method: &MethodDecl{
+				ReturnType: TypeInfo{
+					Name: "instancetype",
+				},
+				NameParts:   []string{"init"},
+				Unavailable: true,
+			},
+		},
+	},
 }

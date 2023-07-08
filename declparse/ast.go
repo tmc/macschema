@@ -61,11 +61,12 @@ func (f *FunctionDecl) Ident() string {
 type FuncArgs []ArgInfo
 
 type MethodDecl struct {
-	TypeMethod bool // instance method otherwise
-	ReturnType TypeInfo
-	NameParts  []string
-	Args       []ArgInfo
-	Variadic   bool
+	TypeMethod  bool // instance method otherwise
+	ReturnType  TypeInfo
+	NameParts   []string
+	Args        []ArgInfo
+	Variadic    bool
+	Unavailable bool
 }
 
 func (m *MethodDecl) Name() string {

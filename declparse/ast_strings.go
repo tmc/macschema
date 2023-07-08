@@ -138,6 +138,9 @@ func (m MethodDecl) String() string {
 		}
 		b.WriteString("...")
 	}
+	if m.Unavailable {
+		b.WriteString(" NS_UNAVAILABLE")
+	}
 	return b.String()
 }
 
