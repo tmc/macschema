@@ -72,5 +72,13 @@ func parseMethod(p *Parser) (next stateFn, node Node, err error) {
 		p.tb.Unscan()
 	}
 
+	tok, _, lit = p.tb.Scan()
+	if lit == "NS_UNAVAILABLE" {
+		// Handle NS_UNAVAILABLE.
+		decl.Unavailable = true
+	} else {
+		p.tb.Unscan()
+	}
+
 	return nil, decl, nil
 }

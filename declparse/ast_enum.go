@@ -83,6 +83,7 @@ const (
 	TypeAnnotNonnull
 	TypeAnnotNullUnspecified
 	TypeAnnotStruct
+	TypeAnnotUnavailable
 )
 
 var typeAnnots = map[TypeAnnotation]string{

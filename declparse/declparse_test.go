@@ -858,4 +858,16 @@ var tests = []struct {
 			},
 		},
 	},
+	{
+		s: `- (instancetype)init NS_UNAVAILABLE;`,
+		n: &Statement{
+			Method: &MethodDecl{
+				ReturnType: TypeInfo{
+					Name: "instancetype",
+				},
+				NameParts:   []string{"init"},
+				Unavailable: true,
+			},
+		},
+	},
 }
