@@ -116,6 +116,7 @@ type Method struct {
 	Args        []Arg
 	Deprecated  bool   `json:",omitempty"`
 	TopicURL    string `json:",omitempty"`
+	Unavailable bool
 }
 
 type Topic struct {
