@@ -32,7 +32,7 @@ func PullSchema(l Lookup) Schema {
 	case "API Collection":
 		schemaForAPICollection(&s, t)
 	default:
-		fatal(fmt.Errorf("schema not supported for %q", t.Type))
+		log.Println(fmt.Errorf("schema not supported for %q (skipped)", t.Type))
 	}
 
 	return s
